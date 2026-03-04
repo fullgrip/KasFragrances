@@ -1,0 +1,5 @@
+export { HomePage } from './HomePage'
+export { CollectionPage } from './CollectionPage'
+export { ProductPage } from './ProductPage'
+export { AboutPage } from './AboutPage'
+export { SearchPage } from './SearchPage'

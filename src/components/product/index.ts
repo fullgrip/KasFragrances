@@ -1,0 +1,6 @@
+export { ProductCard } from './ProductCard'
+export { ScentNotes } from './ScentNotes'
+export { ProductDetails } from './ProductDetails'
+export { ImageGallery } from './ImageGallery'
+export { StarRating } from './StarRating'
+export { Reviews } from './Reviews'

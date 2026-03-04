@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-kas-cream text-kas-charcoal antialiased;
+    font-family: 'Nunito Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+    @apply font-medium tracking-tight;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-8 py-3
+           bg-kas-charcoal text-white font-sans font-medium text-sm
+           tracking-wider uppercase
+           transition-all duration-300
+           hover:bg-kas-gold hover:text-kas-charcoal;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-8 py-3
+           border-2 border-kas-charcoal text-kas-charcoal
+           font-sans font-medium text-sm tracking-wider uppercase
+           transition-all duration-300
+           hover:bg-kas-charcoal hover:text-white;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center px-8 py-3
+           bg-kas-gold text-kas-charcoal font-sans font-medium text-sm
+           tracking-wider uppercase
+           transition-all duration-300
+           hover:bg-kas-copper hover:text-white;
+  }
+
+  .section-heading {
+    @apply text-4xl md:text-5xl font-serif text-kas-charcoal mb-4;
+  }
+
+  .section-subheading {
+    @apply text-lg text-kas-slate font-light max-w-2xl mx-auto;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  .link-underline {
+    @apply relative inline-block after:content-[''] after:absolute
+           after:w-0 after:h-px after:bottom-0 after:left-0
+           after:bg-kas-gold after:transition-all after:duration-300
+           hover:after:w-full;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: theme('colors.kas.cream');
+}
+
+::-webkit-scrollbar-thumb {
+  background: theme('colors.kas.gold');
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: theme('colors.kas.copper');
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-fade-in-delay {
+  animation: fadeIn 0.6s ease-out 0.2s forwards;
+  opacity: 0;
+}

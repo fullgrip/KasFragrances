@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell:*)",
+      "Bash(dir:*)",
+      "Bash(npm create:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(cd c:UsersaampgDocumentsProjectos CodingKasFragrances)",
+      "Bash(npx tsc:*)",
+      "Bash(curl:*)",
+      "Bash(python:*)",
+      "Bash(cd:*)",
+      "Bash(node -e:*)",
+      "Bash(ping:*)",
+      "Bash(npm install:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
