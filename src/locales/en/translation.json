@@ -2,7 +2,7 @@
   "nav": {
     "collection": "Collection",
     "discoverySet": "Discovery Set",
-    "ourStory": "Our Story",
+    "ourStory": "Kim's Story",
     "openMenu": "Open menu",
     "openCart": "Open cart"
   },
@@ -18,9 +18,10 @@
     "copyright": "© {{year}} KAS Fragrances. All rights reserved."
   },
   "home": {
-    "heroTitle1": "Small-Batch Scents.",
-    "heroTitle2": "Handcrafted in Portugal.",
+    "heroTitle1": "Artisan Perfumes Crafted in Portugal",
+    "heroTitle2": "Discover Your Signature Scent.",
     "heroSubtitle": "Each fragrance is personally blended by Kim using the finest European ingredients — never mass-produced, never rushed.",
+    "heroSocialProof": "5.0 from early reviews",
     "exploreCollection": "Explore the Collection",
     "tryDiscoverySet": "Try the Discovery Set",
     "artisanQuality": "Artisan Quality",
@@ -40,8 +41,8 @@
     "theArtisan": "The Artisan",
     "handcraftedByKim": "Handcrafted by Kim",
     "kimStory1": "Every KAS fragrance is personally crafted by Kim in her studio in Portugal. With a passion for unique scent combinations and an uncompromising commitment to quality, Kim sources only the finest European ingredients to create fragrances that tell a story.",
-    "kimQuote": "\"I believe fragrance is deeply personal. Each bottle I create carries a piece of my heart — I want you to feel that when you wear it.\"",
-    "readOurStory": "Read Our Story"
+    "kimQuote": "\"It is my wish that my creations bring you joy and make you feel special and beautiful, because you are.\"",
+    "readOurStory": "Read Kim's Story"
   },
   "collection": {
     "title": "The Collection",
@@ -79,11 +80,23 @@
     "soldOut": "Sold Out",
     "samplesReminder": "Every order includes <strong>2 complimentary samples</strong> of your choice.",
     "whatsIncluded": "What's Included",
-    "discoveryItem1": "3 × 2ml spray vials of Kim's choice",
+    "discoveryItem1": "3 × 2ml spray vials: Citrus Marine & Wood, Tantalizing Tonka, and Secrets",
     "discoveryItem2": "€10 credit toward your first full bottle (code: MYFIRSTKAS)",
     "discoveryItem3": "Free shipping on the Discovery Set",
     "decreaseQuantity": "Decrease quantity",
-    "increaseQuantity": "Increase quantity"
+    "increaseQuantity": "Increase quantity",
+    "whatYoullDiscover": "What You'll Discover",
+    "fragrance1Name": "Citrus Marine & Wood",
+    "fragrance1Desc": "Fresh and coastal — energizing opening",
+    "fragrance2Name": "Tantalizing Tonka",
+    "fragrance2Desc": "Warm and addictive — comforting sweetness",
+    "fragrance3Name": "Secrets",
+    "fragrance3Desc": "Deep and mysterious — evening sophistication",
+    "howToTest": "How to Test Your Samples",
+    "testStep1": "Spray on pulse points — wrists and neck",
+    "testStep2": "Wait 30 minutes for the dry-down",
+    "testStep3": "Compare how each evolves on your skin",
+    "testStep4": "Note which lasts longest and suits your style"
   },
   "scent": {
     "profile": "Scent Profile",
@@ -138,5 +151,10 @@
   "language": {
     "en": "English",
     "pt": "Português"
+  },
+  "badges": {
+    "bestseller": "Bestseller",
+    "new": "New",
+    "staffPick": "Staff Pick"
   }
 }

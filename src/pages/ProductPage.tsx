@@ -44,7 +44,7 @@ const placeholderProducts: Record<string, Product> = {
     title: 'KAS Discovery Set',
     description: 'Not sure which scent is yours? Try three of our signature fragrances for just €15 — and we\'ll include a €10 credit toward your first full bottle.',
     descriptionHtml: '<p>Not sure which scent is yours? Try three of our signature fragrances for just €15 — and we\'ll include a €10 credit toward your first full bottle.</p>',
-    subtitle: '3 × 2ml spray vials of Kim\'s choice. The perfect way to discover your signature scent.',
+    subtitle: 'Three signature scents hand-picked by Kim to showcase our range — from fresh citrus to warm tonka to mysterious depth.',
     details: {
       size: '3 × 2ml spray vials',
       longevity: '3-5 wears per vial',
@@ -53,7 +53,9 @@ const placeholderProducts: Record<string, Product> = {
       isCrueltyFree: true,
     },
     valueAnchor: 'Includes €10 credit toward your first full bottle',
-    images: [],
+    images: [
+      { id: 'ds-img-1', url: '/images/discovery-set.jpg', altText: 'KAS Discovery Set - 3 perfume sample vials', width: 800, height: 800 },
+    ],
     variants: [{ id: 'vds', title: '3 Samples', price: { amount: '15.00', currencyCode: 'EUR' }, availableForSale: true }],
     tags: ['discovery', 'samples', 'gift'],
     productType: 'Sample Set',
@@ -65,7 +67,7 @@ const placeholderProducts: Record<string, Product> = {
 
 export function ProductPage() {
   const { handle } = useParams<{ handle: string }>()
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [product, setProduct] = useState<Product | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null)
@@ -210,27 +212,82 @@ export function ProductPage() {
             {/* Discovery Set specifics */}
             {isDiscoverySet && (
               <div className="mb-6 bg-kas-sand/50 rounded-xl p-6">
-                <h3 className="font-serif text-lg text-kas-charcoal mb-3">What's Included</h3>
+                <h3 className="font-serif text-lg text-kas-charcoal mb-3">{t('product.whatsIncluded')}</h3>
                 <ul className="space-y-2 text-kas-slate">
                   <li className="flex items-start gap-2">
                     <svg className="w-5 h-5 text-kas-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    3 × 2ml spray vials of Kim's choice
+                    {t('product.discoveryItem1')}
                   </li>
                   <li className="flex items-start gap-2">
                     <svg className="w-5 h-5 text-kas-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    €10 credit toward your first full bottle (code: MYFIRSTKAS)
+                    {t('product.discoveryItem2')}
                   </li>
                   <li className="flex items-start gap-2">
                     <svg className="w-5 h-5 text-kas-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Free shipping on the Discovery Set
+                    {t('product.discoveryItem3')}
                   </li>
                 </ul>
+              </div>
+            )}
+
+            {/* What You'll Discover */}
+            {isDiscoverySet && (
+              <div className="mb-6 bg-white rounded-xl p-6 border border-kas-sand">
+                <h3 className="font-serif text-lg text-kas-charcoal mb-4">{t('product.whatYoullDiscover')}</h3>
+                <div className="space-y-4">
+                  <div className="flex gap-3">
+                    <span className="text-kas-gold">●</span>
+                    <div>
+                      <p className="font-medium text-kas-charcoal">{t('product.fragrance1Name')}</p>
+                      <p className="text-sm text-kas-slate">{t('product.fragrance1Desc')}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-kas-gold">●</span>
+                    <div>
+                      <p className="font-medium text-kas-charcoal">{t('product.fragrance2Name')}</p>
+                      <p className="text-sm text-kas-slate">{t('product.fragrance2Desc')}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-kas-gold">●</span>
+                    <div>
+                      <p className="font-medium text-kas-charcoal">{t('product.fragrance3Name')}</p>
+                      <p className="text-sm text-kas-slate">{t('product.fragrance3Desc')}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* How to Test Your Samples */}
+            {isDiscoverySet && (
+              <div className="mb-6 bg-kas-sand/30 rounded-xl p-6">
+                <h3 className="font-serif text-lg text-kas-charcoal mb-4">{t('product.howToTest')}</h3>
+                <ol className="space-y-3 text-kas-slate">
+                  <li className="flex gap-3">
+                    <span className="font-serif text-kas-gold">1.</span>
+                    <span>{t('product.testStep1')}</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="font-serif text-kas-gold">2.</span>
+                    <span>{t('product.testStep2')}</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="font-serif text-kas-gold">3.</span>
+                    <span>{t('product.testStep3')}</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="font-serif text-kas-gold">4.</span>
+                    <span>{t('product.testStep4')}</span>
+                  </li>
+                </ol>
               </div>
             )}
 
@@ -286,11 +343,6 @@ export function ProductPage() {
               <TrustBadges variant="compact" />
             </div>
           </div>
-        </div>
-
-        {/* Full Trust Badges Section */}
-        <div className="mt-16 pt-12 border-t border-kas-sand">
-          <TrustBadges variant="horizontal" />
         </div>
 
         {/* Reviews Section */}

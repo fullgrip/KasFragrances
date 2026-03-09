@@ -131,23 +131,35 @@ export function HomePage() {
               <p className="mt-6 text-lg text-kas-slate font-light leading-relaxed animate-fade-in-delay">
                 {t('home.heroSubtitle')}
               </p>
-              <div className="mt-8 flex flex-wrap gap-4 animate-fade-in-delay">
-                <Link to="/collection" className="btn-primary">
-                  {t('home.exploreCollection')}
-                </Link>
-                <Link to="/products/discovery-set" className="btn-secondary">
+              <div className="mt-4 flex items-center gap-1 text-kas-gold animate-fade-in-delay">
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="text-sm text-kas-slate ml-1">{t('home.heroSocialProof')}</span>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-4 animate-fade-in-delay">
+                <Link to="/products/discovery-set" className="btn-primary">
                   {t('home.tryDiscoverySet')}
+                </Link>
+                <Link to="/collection" className="btn-secondary">
+                  {t('home.exploreCollection')}
                 </Link>
               </div>
             </div>
 
             {/* Hero Image */}
-            <div className="relative aspect-[4/5] md:aspect-[3/4] lg:aspect-[4/5]">
-              <img
-                src="/images/banners/hero.webp"
-                alt="KAS Fragrances"
-                className="w-full h-full object-cover object-center rounded-2xl"
-              />
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative aspect-[4/5] w-full max-w-sm md:max-w-md lg:max-w-lg">
+                <img
+                  src="/images/banners/hero.webp"
+                  alt="KAS Fragrances"
+                  className="w-full h-full object-cover object-center rounded-2xl"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -190,36 +202,6 @@ export function HomePage() {
                 {t('home.freeShippingDesc')}
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Products */}
-      <section className="py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="section-heading">{t('home.theCollection')}</h2>
-            <p className="section-subheading">
-              {t('home.collectionSubtitle')}
-            </p>
-          </div>
-
-          {isLoading ? (
-            <div className="flex justify-center py-12">
-              <div className="w-10 h-10 border-2 border-kas-gold border-t-transparent rounded-full animate-spin" />
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {products.slice(0, 6).map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          )}
-
-          <div className="text-center mt-12">
-            <Link to="/collection" className="btn-secondary">
-              {t('home.viewAllFragrances')}
-            </Link>
           </div>
         </div>
       </section>
@@ -277,6 +259,36 @@ export function HomePage() {
                 </video>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Products */}
+      <section className="py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="section-heading">{t('home.theCollection')}</h2>
+            <p className="section-subheading">
+              {t('home.collectionSubtitle')}
+            </p>
+          </div>
+
+          {isLoading ? (
+            <div className="flex justify-center py-12">
+              <div className="w-10 h-10 border-2 border-kas-gold border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {products.slice(0, 3).map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
+
+          <div className="text-center mt-12">
+            <Link to="/collection" className="btn-secondary">
+              {t('home.viewAllFragrances')}
+            </Link>
           </div>
         </div>
       </section>

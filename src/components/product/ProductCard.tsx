@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import type { Product } from '../../types'
+import { Badge } from '../ui'
 
 interface ProductCardProps {
   product: Product
@@ -11,6 +12,26 @@ export function ProductCard({ product }: ProductCardProps) {
   const image = product.images[0]
   const secondImage = product.images[1]
   const hasSecondImage = !!secondImage
+
+  // Get badge type from product tags
+  const getBadgeType = (): 'bestseller' | 'new' | 'staff-pick' | null => {
+    const tags = product.tags.map(t => t.toLowerCase())
+    if (tags.includes('bestseller')) return 'bestseller'
+    if (tags.includes('new')) return 'new'
+    if (tags.includes('staff-pick')) return 'staff-pick'
+    return null
+  }
+
+  // Get scent info with fallbacks
+  const getScentInfo = (): string | null => {
+    if (product.subtitle) return product.subtitle
+    if (product.scentProfile?.fragranceFamily) return product.scentProfile.fragranceFamily
+    if (product.scentNotes?.top?.length) return product.scentNotes.top.slice(0, 2).join(' · ')
+    return null
+  }
+
+  const badgeType = getBadgeType()
+  const scentInfo = getScentInfo()
 
   // Hover state for desktop
   const [isHovered, setIsHovered] = useState(false)
@@ -45,6 +66,12 @@ export function ProductCard({ product }: ProductCardProps) {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
+        {/* Badge */}
+        {badgeType && (
+          <div className="absolute top-2 left-2 md:top-3 md:left-3 z-10">
+            <Badge type={badgeType} />
+          </div>
+        )}
         {image ? (
           <>
             {/* Primary image */}
@@ -80,9 +107,9 @@ export function ProductCard({ product }: ProductCardProps) {
         <h3 className="font-serif text-lg text-kas-charcoal group-hover:text-kas-gold transition-colors">
           {product.title}
         </h3>
-        {product.subtitle && (
-          <p className="text-sm text-kas-slate mt-1 line-clamp-2">
-            {product.subtitle}
+        {scentInfo && (
+          <p className="text-sm text-kas-slate mt-1 truncate">
+            {scentInfo}
           </p>
         )}
         <p className="mt-2 font-sans text-kas-charcoal">

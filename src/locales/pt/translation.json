@@ -2,7 +2,7 @@
   "nav": {
     "collection": "Coleção",
     "discoverySet": "Kit Descoberta",
-    "ourStory": "A Nossa História",
+    "ourStory": "A História da Kim",
     "openMenu": "Abrir menu",
     "openCart": "Abrir carrinho"
   },
@@ -18,9 +18,10 @@
     "copyright": "© {{year}} KAS Fragrances. Todos os direitos reservados."
   },
   "home": {
-    "heroTitle1": "Fragrâncias Artesanais.",
-    "heroTitle2": "Feitas à Mão em Portugal.",
+    "heroTitle1": "Perfumes Artesanais Criados em Portugal",
+    "heroTitle2": "Descubra a Sua Fragrância.",
     "heroSubtitle": "Cada fragrância é pessoalmente misturada pela Kim usando os melhores ingredientes europeus — nunca produzido em massa, nunca apressado.",
+    "heroSocialProof": "5.0 de avaliações iniciais",
     "exploreCollection": "Explorar a Coleção",
     "tryDiscoverySet": "Experimentar o Kit Descoberta",
     "artisanQuality": "Qualidade Artesanal",
@@ -40,8 +41,8 @@
     "theArtisan": "A Artesã",
     "handcraftedByKim": "Feito à Mão pela Kim",
     "kimStory1": "Cada fragrância KAS é pessoalmente criada pela Kim no seu estúdio em Portugal. Com paixão por combinações de aromas únicos e um compromisso intransigente com a qualidade, Kim seleciona apenas os melhores ingredientes europeus para criar fragrâncias que contam uma história.",
-    "kimQuote": "\"Acredito que a fragrância é profundamente pessoal. Cada garrafa que crio carrega um pedaço do meu coração — quero que sinta isso quando a usar.\"",
-    "readOurStory": "Ler a Nossa História"
+    "kimQuote": "\"É o meu desejo que as minhas criações lhe tragam alegria e a façam sentir especial e bonita, porque é.\"",
+    "readOurStory": "Ler a História da Kim"
   },
   "collection": {
     "title": "A Coleção",
@@ -79,11 +80,23 @@
     "soldOut": "Esgotado",
     "samplesReminder": "Cada encomenda inclui <strong>2 amostras</strong> à sua escolha.",
     "whatsIncluded": "O Que Está Incluído",
-    "discoveryItem1": "3 × 2ml frascos spray à escolha da Kim",
+    "discoveryItem1": "3 × 2ml frascos spray: Citrus Marine & Wood, Tantalizing Tonka e Secrets",
     "discoveryItem2": "Crédito de €10 para a sua primeira garrafa (código: MYFIRSTKAS)",
     "discoveryItem3": "Envio grátis no Kit Descoberta",
     "decreaseQuantity": "Diminuir quantidade",
-    "increaseQuantity": "Aumentar quantidade"
+    "increaseQuantity": "Aumentar quantidade",
+    "whatYoullDiscover": "O Que Vai Descobrir",
+    "fragrance1Name": "Citrus Marine & Wood",
+    "fragrance1Desc": "Fresco e costeiro — abertura energizante",
+    "fragrance2Name": "Tantalizing Tonka",
+    "fragrance2Desc": "Quente e viciante — doçura reconfortante",
+    "fragrance3Name": "Secrets",
+    "fragrance3Desc": "Profundo e misterioso — sofisticação noturna",
+    "howToTest": "Como Testar as Suas Amostras",
+    "testStep1": "Aplique nos pontos de pulso — pulsos e pescoço",
+    "testStep2": "Espere 30 minutos pelo dry-down",
+    "testStep3": "Compare como cada um evolui na sua pele",
+    "testStep4": "Note qual dura mais e combina com o seu estilo"
   },
   "scent": {
     "profile": "Perfil do Aroma",
@@ -138,5 +151,10 @@
   "language": {
     "en": "English",
     "pt": "Português"
+  },
+  "badges": {
+    "bestseller": "Mais Vendido",
+    "new": "Novo",
+    "staffPick": "Escolha da Equipa"
   }
 }

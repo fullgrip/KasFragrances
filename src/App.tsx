@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Layout } from './components/layout'
+import { ScrollToTop } from './components/ScrollToTop'
 import { HomePage, CollectionPage, ProductPage, AboutPage, SearchPage } from './pages'
 import { useCartStore } from './store/cart'
 import { mapLanguageCode } from './lib/shopify'
@@ -16,8 +17,10 @@ function App() {
   }, [i18n.language, setCartLanguage])
 
   return (
-    <Layout>
-      <Routes>
+    <>
+      <ScrollToTop />
+      <Layout>
+        <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/collection" element={<CollectionPage />} />
         <Route path="/products/:handle" element={<ProductPage />} />
@@ -28,8 +31,9 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         {/* 404 */}
         <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </Layout>
+        </Routes>
+      </Layout>
+    </>
   )
 }
 
