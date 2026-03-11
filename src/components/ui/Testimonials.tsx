@@ -1,30 +1,57 @@
+import { useState, useRef, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import type { Testimonial } from '../../types'
 
-// Sample testimonials - these would typically come from Shopify reviews or a CMS
-const testimonials: Testimonial[] = [
+const allTestimonials: Testimonial[] = [
   {
     id: '1',
-    quote: "I've never received so many compliments on a fragrance. The quality is remarkable — it lasts all day and the scent evolves beautifully.",
-    author: 'Sofia M.',
-    title: 'Loyal Customer',
+    quote: "I've received so many compliments wearing Citrus Marine & Wood. It's fresh and elegant, and the scent lasts all day. You can tell Kim puts real care into every fragrance.",
+    author: 'Kat',
     rating: 5,
     productName: 'Citrus Marine & Wood',
+    productSlug: 'citrus-marine-wood-eau-de-parfum',
+    scentTags: ['Fresh', 'Marine', 'Woody'],
+    avatar: '/images/reviewers/kat.png',
   },
   {
     id: '2',
-    quote: "Kim's attention to detail is extraordinary. You can tell each bottle is crafted with love. This is what luxury fragrance should be.",
-    author: 'Maria L.',
-    title: 'Makeup Artist',
+    quote: "Tantalizing Tonka is absolutely divine. The warmth of the tonka bean is cozy without being heavy. It's become my signature scent for cooler days.",
+    author: 'Arya',
     rating: 5,
-    productName: 'Rose & Amber',
+    productName: 'Tantalizing Tonka',
+    productSlug: 'tantalizing-tonka-eau-de-parfum',
+    scentTags: ['Warm', 'Sweet', 'Sensual'],
+    avatar: '/images/reviewers/arya.png',
   },
   {
     id: '3',
-    quote: "Finally, a perfume that doesn't smell like everything else on the market. Unique, sophisticated, and absolutely worth every euro.",
-    author: 'Ana R.',
-    title: 'Interior Designer',
+    quote: "Secrets is my go-to for evenings out. It's mysterious and sophisticated without being too heavy. I always get asked what I'm wearing.",
+    author: 'Gisele',
     rating: 5,
-    productName: 'Discovery Set',
+    productName: 'Secrets',
+    productSlug: 'secrets-eau-de-parfum',
+    scentTags: ['Mysterious', 'Elegant', 'Intoxicating'],
+    avatar: '/images/reviewers/gisele.png',
+  },
+  {
+    id: '4',
+    quote: "I have the Coffee Vanilla Tobacco diffuser in my home office. The blend of coffee, vanilla and tobacco is warm and grounding. Perfect for focus.",
+    author: 'João P.',
+    rating: 5,
+    productName: 'Coffee, Vanilla & Tobacco',
+    productSlug: 'coffee-vanilla-tobacco-diffuser',
+    scentTags: ['Coffee', 'Vanilla', 'Tobacco'],
+    avatar: '/images/reviewers/joao-p.jpg',
+  },
+  {
+    id: '5',
+    quote: "Paradise instantly transports me somewhere tropical. It's fresh and exotic but still elegant enough for everyday. My new favorite from KAS.",
+    author: 'Helena S.',
+    rating: 5,
+    productName: 'Paradise',
+    productSlug: 'paradise-eau-de-parfum',
+    scentTags: ['Tropical', 'Fresh', 'Exotic'],
+    avatar: '/images/reviewers/helena-s.jpg',
   },
 ]
 
@@ -45,40 +72,184 @@ function StarRating({ rating }: { rating: number }) {
   )
 }
 
+function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+  return (
+    <div className="bg-white rounded-xl p-8 shadow-sm transition-shadow duration-300 hover:shadow-lg h-full flex flex-col">
+      <StarRating rating={testimonial.rating} />
+
+      <blockquote className="mt-4 mb-6 text-kas-slate font-light leading-relaxed flex-grow">
+        "{testimonial.quote}"
+      </blockquote>
+
+      <div className="flex items-center gap-3">
+        {testimonial.avatar && (
+          <img
+            src={testimonial.avatar}
+            alt={testimonial.author}
+            className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+          />
+        )}
+        <div>
+          <p className="font-serif text-kas-charcoal mb-1">{testimonial.author}</p>
+          <Link
+            to={`/products/${testimonial.productSlug}`}
+            className="text-sm text-kas-gold hover:underline"
+          >
+            Purchased: {testimonial.productName}
+          </Link>
+          <p className="text-xs text-kas-slate mt-1">
+            {testimonial.scentTags.join(' · ')}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function Testimonials() {
+  const testimonials = allTestimonials
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const touchStartX = useRef<number | null>(null)
+
+  const maxDesktopIndex = testimonials.length - 3
+  const maxMobileIndex = testimonials.length - 1
+
+  // Prevent index overflow when resizing
+  useEffect(() => {
+    if (currentIndex > maxDesktopIndex) {
+      setCurrentIndex(maxDesktopIndex)
+    }
+  }, [currentIndex, maxDesktopIndex])
+
+  const goToPrevious = (max: number) => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1)
+    } else {
+      setCurrentIndex(max)
+    }
+  }
+
+  const goToNext = (max: number) => {
+    if (currentIndex < max) {
+      setCurrentIndex(currentIndex + 1)
+    } else {
+      setCurrentIndex(0)
+    }
+  }
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+
+    const touchEndX = e.changedTouches[0].clientX
+    const diff = touchStartX.current - touchEndX
+
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        // Swipe left - next
+        goToNext(maxMobileIndex)
+      } else {
+        // Swipe right - previous
+        goToPrevious(maxMobileIndex)
+      }
+    }
+
+    touchStartX.current = null
+  }
+
+  // Get visible testimonials for desktop (3 at a time)
+  const desktopTestimonials = testimonials.slice(currentIndex, currentIndex + 3)
+
   return (
     <section className="py-20 bg-kas-sand/30">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="section-heading">What Our Customers Say</h2>
+          <h2 className="section-heading">What Customers Are Saying</h2>
           <p className="section-subheading">
             Discover why fragrance lovers are choosing KAS
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial) => (
-            <div
-              key={testimonial.id}
-              className="bg-white rounded-xl p-8 shadow-sm"
+        {/* Desktop Carousel */}
+        <div className="hidden md:block relative">
+          {/* Left Arrow */}
+          <button
+            onClick={() => goToPrevious(maxDesktopIndex)}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-kas-charcoal hover:bg-kas-sand transition-colors"
+            aria-label="Previous reviews"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Cards Grid */}
+          <div className="grid grid-cols-3 gap-8">
+            {desktopTestimonials.map((testimonial) => (
+              <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+            ))}
+          </div>
+
+          {/* Right Arrow */}
+          <button
+            onClick={() => goToNext(maxDesktopIndex)}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-kas-charcoal hover:bg-kas-sand transition-colors"
+            aria-label="Next reviews"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Mobile Carousel */}
+        <div
+          className="md:hidden relative"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Single Card */}
+          <TestimonialCard testimonial={testimonials[currentIndex]} />
+
+          {/* Navigation */}
+          <div className="flex items-center justify-center gap-4 mt-6">
+            <button
+              onClick={() => goToPrevious(maxMobileIndex)}
+              className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-kas-charcoal hover:bg-kas-sand transition-colors"
+              aria-label="Previous review"
             >
-              <StarRating rating={testimonial.rating} />
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
 
-              <blockquote className="mt-4 text-kas-slate font-light leading-relaxed">
-                "{testimonial.quote}"
-              </blockquote>
-
-              <div className="mt-6 pt-6 border-t border-kas-sand">
-                <p className="font-serif text-kas-charcoal">{testimonial.author}</p>
-                <p className="text-sm text-kas-slate">{testimonial.title}</p>
-                {testimonial.productName && (
-                  <p className="text-sm text-kas-gold mt-1">
-                    Purchased: {testimonial.productName}
-                  </p>
-                )}
-              </div>
+            {/* Dots */}
+            <div className="flex gap-2">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    index === currentIndex ? 'bg-kas-gold' : 'bg-kas-slate/30'
+                  }`}
+                  aria-label={`Go to review ${index + 1}`}
+                />
+              ))}
             </div>
-          ))}
+
+            <button
+              onClick={() => goToNext(maxMobileIndex)}
+              className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-kas-charcoal hover:bg-kas-sand transition-colors"
+              aria-label="Next review"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>

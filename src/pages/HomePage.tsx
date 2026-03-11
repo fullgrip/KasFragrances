@@ -5,6 +5,7 @@ import { ProductCard } from '../components/product'
 import { Testimonials } from '../components/ui'
 import type { Product } from '../types'
 import { getProducts, mapLanguageCode } from '../lib/shopify'
+import { FEATURES } from '../config/features'
 
 // Placeholder products for development/demo (shown when Shopify isn't connected)
 const placeholderProducts: Product[] = [
@@ -15,6 +16,7 @@ const placeholderProducts: Product[] = [
     description: 'A bright, coastal opening of sun-drenched citrus melting into marine salt air, anchored by warm, lingering driftwood.',
     descriptionHtml: '',
     subtitle: 'A bright, coastal opening of sun-drenched citrus melting into marine salt air, anchored by warm, lingering driftwood.',
+    scentTags: ['Fresh', 'Marine', 'Woody'],
     scentNotes: {
       top: ['Bergamot', 'Lemon Zest', 'Sea Salt'],
       heart: ['Marine Accord', 'Jasmine', 'Vetiver'],
@@ -43,6 +45,7 @@ const placeholderProducts: Product[] = [
     description: 'Velvety Damascus rose embraced by warm amber and a whisper of vanilla.',
     descriptionHtml: '',
     subtitle: 'Velvety Damascus rose embraced by warm amber and a whisper of vanilla.',
+    scentTags: ['Floral', 'Warm', 'Romantic'],
     scentNotes: {
       top: ['Pink Pepper', 'Bergamot'],
       heart: ['Damascus Rose', 'Peony', 'Saffron'],
@@ -71,6 +74,7 @@ const placeholderProducts: Product[] = [
     description: 'Rich, smoky oud layered with velvet rose and precious woods.',
     descriptionHtml: '',
     subtitle: 'Rich, smoky oud layered with velvet rose and precious woods.',
+    scentTags: ['Rich', 'Smoky', 'Opulent'],
     scentNotes: {
       top: ['Saffron', 'Cardamom'],
       heart: ['Oud', 'Bulgarian Rose', 'Leather'],
@@ -142,10 +146,16 @@ export function HomePage() {
                 <span className="text-sm text-kas-slate ml-1">{t('home.heroSocialProof')}</span>
               </div>
               <div className="mt-6 flex flex-wrap gap-4 animate-fade-in-delay">
-                <Link to="/products/discovery-set" className="btn-primary">
-                  {t('home.tryDiscoverySet')}
-                </Link>
-                <Link to="/collection" className="btn-secondary">
+                {FEATURES.DISCOVERY_SET_ENABLED ? (
+                  <Link to="/products/discovery-set" className="btn-primary">
+                    {t('home.tryDiscoverySet')}
+                  </Link>
+                ) : (
+                  <Link to="/collection" className="btn-primary">
+                    {t('home.exploreCollection')}
+                  </Link>
+                )}
+                <Link to="/collection" className={FEATURES.DISCOVERY_SET_ENABLED ? "btn-secondary" : "btn-secondary hidden"}>
                   {t('home.exploreCollection')}
                 </Link>
               </div>
@@ -207,25 +217,27 @@ export function HomePage() {
       </section>
 
       {/* Discovery Set CTA */}
-      <section className="py-20 bg-kas-charcoal text-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <span className="text-kas-gold text-sm uppercase tracking-widest">{t('home.discoveryNew')}</span>
-            <h2 className="font-serif text-3xl md:text-4xl mt-4 mb-6">
-              {t('home.discoveryTitle')}
-            </h2>
-            <p className="text-gray-300 font-light leading-relaxed mb-8">
-              {t('home.discoveryDesc')}
-            </p>
-            <Link to="/products/discovery-set" className="btn-gold">
-              {t('home.getDiscoverySet')}
-            </Link>
-            <p className="text-sm text-gray-400 mt-4">
-              {t('home.discoveryDetails')}
-            </p>
+      {FEATURES.DISCOVERY_SET_ENABLED && (
+        <section className="py-20 bg-kas-charcoal text-white">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto text-center">
+              <span className="text-kas-gold text-sm uppercase tracking-widest">{t('home.discoveryNew')}</span>
+              <h2 className="font-serif text-3xl md:text-4xl mt-4 mb-6">
+                {t('home.discoveryTitle')}
+              </h2>
+              <p className="text-gray-300 font-light leading-relaxed mb-8">
+                {t('home.discoveryDesc')}
+              </p>
+              <Link to="/products/discovery-set" className="btn-gold">
+                {t('home.getDiscoverySet')}
+              </Link>
+              <p className="text-sm text-gray-400 mt-4">
+                {t('home.discoveryDetails')}
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* About Kim / Story Teaser */}
       <section className="py-20">
@@ -238,6 +250,9 @@ export function HomePage() {
               </h2>
               <p className="text-kas-slate font-light leading-relaxed mb-6">
                 {t('home.kimStory1')}
+              </p>
+              <p className="text-kas-slate font-light leading-relaxed mb-6">
+                {t('home.kimStory2')}
               </p>
               <p className="text-kas-slate font-light leading-relaxed mb-8">
                 {t('home.kimQuote')}

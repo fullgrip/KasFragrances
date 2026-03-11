@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getProduct, mapLanguageCode } from '../lib/shopify'
 import type { Product } from '../types'
+import { FEATURES } from '../config/features'
 
 const FEATURED_PRODUCT_HANDLE = 'rose-blossom-body-mist'
 
@@ -275,7 +276,7 @@ export function AboutPage() {
               </div>
               <h3 className="font-serif text-2xl text-kas-gold mb-3">Ethically Made</h3>
               <p className="text-gray-300 font-light">
-                100% vegan and cruelty-free. Always.
+                100% cruelty-free. Always.
               </p>
             </div>
           </div>
@@ -296,9 +297,11 @@ export function AboutPage() {
             <Link to="/collection" className="inline-block px-8 py-4 bg-kas-charcoal text-white font-medium rounded hover:bg-kas-charcoal/90 transition-colors">
               Explore the Collection
             </Link>
-            <Link to="/products/discovery-set" className="inline-block px-8 py-4 border-2 border-kas-charcoal text-kas-charcoal font-medium rounded hover:bg-kas-charcoal hover:text-white transition-colors">
-              Try the Discovery Set
-            </Link>
+            {FEATURES.DISCOVERY_SET_ENABLED && (
+              <Link to="/products/discovery-set" className="inline-block px-8 py-4 border-2 border-kas-charcoal text-kas-charcoal font-medium rounded hover:bg-kas-charcoal hover:text-white transition-colors">
+                Try the Discovery Set
+              </Link>
+            )}
           </div>
         </div>
       </section>

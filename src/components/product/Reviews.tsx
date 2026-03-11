@@ -4,6 +4,7 @@ import { StarRating } from './StarRating'
 export interface Review {
   id: string
   author: string
+  avatar?: string
   rating: number
   title: string
   content: string
@@ -17,69 +18,95 @@ interface ReviewsProps {
   productTitle: string
 }
 
-// Mock reviews data - replace with API call later
+// Reviews data aligned with homepage testimonials
 const mockReviews: Record<string, Review[]> = {
-  'citrus-marine-wood': [
+  'citrus-marine-wood-eau-de-parfum': [
     {
       id: '1',
-      author: 'Sofia M.',
+      author: 'Kat',
+      avatar: '/images/reviewers/kat.png',
       rating: 5,
-      title: 'My new signature scent!',
-      content: 'I\'ve been searching for the perfect fresh fragrance for years, and this is it. The marine notes are subtle and sophisticated, not overpowering. Lasts all day on my skin.',
-      date: '2024-01-15',
+      title: 'Fresh, elegant, and long-lasting',
+      content: "I've received so many compliments wearing Citrus Marine & Wood. It's fresh and elegant, and the scent lasts all day. You can tell Kim puts real care into every fragrance.",
+      date: '2024-02-15',
       verified: true,
-      helpful: 12,
+      helpful: 24,
     },
+  ],
+  'tantalizing-tonka-eau-de-parfum': [
     {
-      id: '2',
+      id: '1',
+      author: 'Arya',
+      avatar: '/images/reviewers/arya.png',
+      rating: 5,
+      title: 'My signature scent for cooler days',
+      content: "Tantalizing Tonka is absolutely divine. The warmth of the tonka bean is cozy without being heavy. It's become my signature scent for cooler days.",
+      date: '2024-02-10',
+      verified: true,
+      helpful: 18,
+    },
+  ],
+  'secrets-eau-de-parfum': [
+    {
+      id: '1',
+      author: 'Gisele',
+      avatar: '/images/reviewers/gisele.png',
+      rating: 5,
+      title: 'Perfect for evenings out',
+      content: "Secrets is my go-to for evenings out. It's mysterious and sophisticated without being too heavy. I always get asked what I'm wearing.",
+      date: '2024-02-05',
+      verified: true,
+      helpful: 21,
+    },
+  ],
+  'coffee-vanilla-tobacco-diffuser': [
+    {
+      id: '1',
       author: 'João P.',
-      rating: 4,
-      title: 'Great summer fragrance',
-      content: 'Perfect for warm days. The citrus opening is bright and the drydown is warm and comforting. Only wish it lasted a bit longer.',
-      date: '2024-01-10',
-      verified: true,
-      helpful: 8,
-    },
-    {
-      id: '3',
-      author: 'Maria C.',
+      avatar: '/images/reviewers/joao-p.jpg',
       rating: 5,
-      title: 'Compliment magnet',
-      content: 'I get asked what I\'m wearing every time. Beautiful blend of freshness and warmth. Worth every penny.',
-      date: '2024-01-05',
+      title: 'Perfect for my home office',
+      content: "I have the Coffee Vanilla Tobacco diffuser in my home office. The blend of coffee, vanilla and tobacco is warm and grounding. Perfect for focus.",
+      date: '2024-01-28',
       verified: true,
       helpful: 15,
     },
   ],
-  'default': [
+  'paradise-eau-de-parfum': [
     {
       id: '1',
-      author: 'Ana R.',
+      author: 'Helena S.',
+      avatar: '/images/reviewers/helena-s.jpg',
       rating: 5,
-      title: 'Beautiful fragrance',
-      content: 'Absolutely love this scent. It\'s unique and lasts all day. The quality is exceptional.',
-      date: '2024-01-20',
+      title: 'My new favorite from KAS',
+      content: "Paradise instantly transports me somewhere tropical. It's fresh and exotic but still elegant enough for everyday. My new favorite from KAS.",
+      date: '2024-02-20',
       verified: true,
-      helpful: 6,
-    },
-    {
-      id: '2',
-      author: 'Pedro S.',
-      rating: 4,
-      title: 'Very nice',
-      content: 'Great quality and beautiful packaging. The scent is sophisticated and long-lasting.',
-      date: '2024-01-12',
-      verified: true,
-      helpful: 4,
+      helpful: 19,
     },
   ],
 }
 
 export function Reviews({ productHandle, productTitle }: ReviewsProps) {
   const [showAll, setShowAll] = useState(false)
+  const [helpfulClicks, setHelpfulClicks] = useState<Record<string, boolean>>({})
 
-  const reviews = mockReviews[productHandle] || mockReviews['default']
+  const reviews = mockReviews[productHandle] || []
   const displayedReviews = showAll ? reviews : reviews.slice(0, 2)
+
+  const handleHelpfulClick = (reviewId: string) => {
+    if (!helpfulClicks[reviewId]) {
+      setHelpfulClicks(prev => ({ ...prev, [reviewId]: true }))
+    }
+  }
+
+  const getHelpfulCount = (review: Review) => {
+    return helpfulClicks[review.id] ? review.helpful + 1 : review.helpful
+  }
+
+  if (reviews.length === 0) {
+    return null
+  }
 
   const averageRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
   const ratingCounts = [5, 4, 3, 2, 1].map(
@@ -154,12 +181,29 @@ export function Reviews({ productHandle, productTitle }: ReviewsProps) {
             </div>
             <p className="text-kas-slate font-light mb-3">{review.content}</p>
             <div className="flex items-center justify-between">
-              <p className="text-sm text-kas-slate">— {review.author}</p>
-              <button className="text-sm text-kas-slate hover:text-kas-charcoal flex items-center gap-1">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="flex items-center gap-3">
+                {review.avatar && (
+                  <img
+                    src={review.avatar}
+                    alt={review.author}
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                )}
+                <p className="text-sm text-kas-slate">— {review.author}</p>
+              </div>
+              <button
+                onClick={() => handleHelpfulClick(review.id)}
+                disabled={helpfulClicks[review.id]}
+                className={`text-sm flex items-center gap-1 transition-colors ${
+                  helpfulClicks[review.id]
+                    ? 'text-kas-gold cursor-default'
+                    : 'text-kas-slate hover:text-kas-charcoal'
+                }`}
+              >
+                <svg className="w-4 h-4" fill={helpfulClicks[review.id] ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
                 </svg>
-                Helpful ({review.helpful})
+                Helpful ({getHelpfulCount(review)})
               </button>
             </div>
           </div>
@@ -175,15 +219,6 @@ export function Reviews({ productHandle, productTitle }: ReviewsProps) {
           {showAll ? 'Show less' : `Show all ${reviews.length} reviews`}
         </button>
       )}
-
-      {/* Write review CTA */}
-      <div className="mt-8 bg-kas-sand/30 rounded-xl p-6 text-center">
-        <p className="text-kas-charcoal mb-2">Have you tried {productTitle}?</p>
-        <p className="text-sm text-kas-slate mb-4">Share your experience with others</p>
-        <button className="btn-secondary">
-          Write a Review
-        </button>
-      </div>
     </div>
   )
 }

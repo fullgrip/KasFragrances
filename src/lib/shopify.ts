@@ -113,6 +113,7 @@ const PRODUCT_FRAGMENT = `
     }
     metafields(identifiers: [
       {namespace: "custom", key: "subtitle"},
+      {namespace: "custom", key: "scent_tags"},
       {namespace: "custom", key: "scent_notes_top"},
       {namespace: "custom", key: "scent_notes_heart"},
       {namespace: "custom", key: "scent_notes_base"},
@@ -350,6 +351,7 @@ function transformProduct(shopifyProduct: any): Product {
     description: cleanDescription,
     descriptionHtml: shopifyProduct.descriptionHtml,
     subtitle: metafields.subtitle,
+    scentTags: metafields.scent_tags ? JSON.parse(metafields.scent_tags) : undefined,
     scentNotes: hasScentNotes ? scentNotes : undefined,
     scentProfile: hasScentProfile ? scentProfile : undefined,
     details,

@@ -51,6 +51,7 @@ export interface Product {
   descriptionHtml: string
   // Extended fields for fragrance-specific data
   subtitle?: string
+  scentTags?: string[]  // Short scent cues: ['Fresh', 'Marine', 'Woody']
   scentNotes?: ScentNotes
   scentProfile?: ScentProfile
   details?: ProductDetails
@@ -106,9 +107,11 @@ export interface Testimonial {
   id: string
   quote: string
   author: string
-  title: string
   rating: number
-  productName?: string
+  productName: string
+  productSlug: string
+  scentTags: string[]
+  avatar?: string
 }
 
 // Navigation types

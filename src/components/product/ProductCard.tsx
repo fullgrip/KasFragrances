@@ -22,11 +22,11 @@ export function ProductCard({ product }: ProductCardProps) {
     return null
   }
 
-  // Get scent info with fallbacks
+  // Get scent info with fallbacks (prioritize short tags)
   const getScentInfo = (): string | null => {
-    if (product.subtitle) return product.subtitle
+    if (product.scentTags?.length) return product.scentTags.join(' · ')
     if (product.scentProfile?.fragranceFamily) return product.scentProfile.fragranceFamily
-    if (product.scentNotes?.top?.length) return product.scentNotes.top.slice(0, 2).join(' · ')
+    if (product.scentNotes?.top?.length) return product.scentNotes.top.slice(0, 3).join(' · ')
     return null
   }
 

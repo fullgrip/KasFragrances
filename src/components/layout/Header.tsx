@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useCartStore } from '../../store/cart'
 import { SearchBar } from './SearchBar'
 import { LanguageSwitcher } from '../LanguageSwitcher'
+import { FEATURES } from '../../config/features'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -13,7 +14,7 @@ export function Header() {
 
   const navigation = [
     { name: t('nav.collection'), href: '/collection' },
-    { name: t('nav.discoverySet'), href: '/products/discovery-set' },
+    ...(FEATURES.DISCOVERY_SET_ENABLED ? [{ name: t('nav.discoverySet'), href: '/products/discovery-set' }] : []),
     { name: t('nav.ourStory'), href: '/about' },
   ]
 

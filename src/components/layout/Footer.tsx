@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { FEATURES } from '../../config/features'
 
 export function Footer() {
   const { t } = useTranslation()
@@ -31,11 +32,13 @@ export function Footer() {
                   {t('nav.collection')}
                 </Link>
               </li>
-              <li>
-                <Link to="/products/discovery-set" className="text-gray-400 hover:text-white transition-colors font-light">
-                  {t('nav.discoverySet')}
-                </Link>
-              </li>
+              {FEATURES.DISCOVERY_SET_ENABLED && (
+                <li>
+                  <Link to="/products/discovery-set" className="text-gray-400 hover:text-white transition-colors font-light">
+                    {t('nav.discoverySet')}
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link to="/about" className="text-gray-400 hover:text-white transition-colors font-light">
                   {t('nav.ourStory')}

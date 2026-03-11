@@ -5,6 +5,7 @@ import { ProductCard } from '../components/product'
 import { ProductGridSkeleton } from '../components/ui'
 import type { Product } from '../types'
 import { getProducts, mapLanguageCode } from '../lib/shopify'
+import { FEATURES } from '../config/features'
 
 // Placeholder products
 const placeholderProducts: Product[] = [
@@ -92,12 +93,12 @@ const placeholderProducts: Product[] = [
     id: '6',
     handle: 'discovery-set',
     title: 'Discovery Set',
-    description: 'Try three of our signature fragrances. Includes €10 credit toward your first full bottle.',
+    description: 'Try five of our signature fragrances. Includes €10 credit toward your first full bottle.',
     descriptionHtml: '',
-    subtitle: '3 × 2ml samples · €10 credit included',
+    subtitle: '5 × 2ml samples · €10 credit included',
     valueAnchor: 'Best way to find your scent',
     images: [],
-    variants: [{ id: 'v6', title: '3 Samples', price: { amount: '15.00', currencyCode: 'EUR' }, availableForSale: true }],
+    variants: [{ id: 'v6', title: '5 Samples', price: { amount: '15.00', currencyCode: 'EUR' }, availableForSale: true }],
     tags: ['discovery', 'samples', 'gift'],
     productType: 'Sample Set',
     vendor: 'KAS Fragrances',
@@ -194,7 +195,9 @@ export function CollectionPage() {
 
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
-    let result = products.filter(p => matchesCategory(p, filter))
+    let result = products
+      .filter(p => FEATURES.DISCOVERY_SET_ENABLED || p.handle !== 'discovery-set')
+      .filter(p => matchesCategory(p, filter))
 
     // Sort
     switch (sort) {

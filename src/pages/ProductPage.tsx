@@ -6,6 +6,7 @@ import { TrustBadges, ProductPageSkeleton } from '../components/ui'
 import { useCartStore } from '../store/cart'
 import type { Product } from '../types'
 import { getProduct, mapLanguageCode } from '../lib/shopify'
+import { FEATURES } from '../config/features'
 
 // Placeholder products for development
 const placeholderProducts: Record<string, Product> = {
@@ -25,7 +26,7 @@ const placeholderProducts: Record<string, Product> = {
       size: '50ml Eau de Parfum',
       longevity: '6-8 hours on skin',
       concentration: '18% fragrance oil',
-      isVegan: true,
+      isVegan: false,
       isCrueltyFree: true,
       ingredients: 'Alcohol Denat., Parfum (Fragrance), Aqua (Water), Limonene, Linalool, Coumarin, Citral',
     },
@@ -42,21 +43,21 @@ const placeholderProducts: Record<string, Product> = {
     id: 'ds',
     handle: 'discovery-set',
     title: 'KAS Discovery Set',
-    description: 'Not sure which scent is yours? Try three of our signature fragrances for just €15 — and we\'ll include a €10 credit toward your first full bottle.',
-    descriptionHtml: '<p>Not sure which scent is yours? Try three of our signature fragrances for just €15 — and we\'ll include a €10 credit toward your first full bottle.</p>',
-    subtitle: 'Three signature scents hand-picked by Kim to showcase our range — from fresh citrus to warm tonka to mysterious depth.',
+    description: 'Not sure which scent is yours? Try five of our signature fragrances for just €15 — and we\'ll include a €10 credit toward your first full bottle.',
+    descriptionHtml: '<p>Not sure which scent is yours? Try five of our signature fragrances for just €15 — and we\'ll include a €10 credit toward your first full bottle.</p>',
+    subtitle: 'Five signature scents hand-picked by Kim to showcase our range.',
     details: {
-      size: '3 × 2ml spray vials',
+      size: '5 × 2ml spray vials',
       longevity: '3-5 wears per vial',
       concentration: 'Eau de Parfum',
-      isVegan: true,
+      isVegan: false,
       isCrueltyFree: true,
     },
     valueAnchor: 'Includes €10 credit toward your first full bottle',
     images: [
-      { id: 'ds-img-1', url: '/images/discovery-set.jpg', altText: 'KAS Discovery Set - 3 perfume sample vials', width: 800, height: 800 },
+      { id: 'ds-img-1', url: '/images/discovery-set.jpg', altText: 'KAS Discovery Set - 5 perfume sample vials', width: 800, height: 800 },
     ],
-    variants: [{ id: 'vds', title: '3 Samples', price: { amount: '15.00', currencyCode: 'EUR' }, availableForSale: true }],
+    variants: [{ id: 'vds', title: '5 Samples', price: { amount: '15.00', currencyCode: 'EUR' }, availableForSale: true }],
     tags: ['discovery', 'samples', 'gift'],
     productType: 'Sample Set',
     vendor: 'KAS Fragrances',
@@ -78,6 +79,8 @@ export function ProductPage() {
     async function fetchProduct() {
       if (!handle) return
 
+      setIsLoading(true)
+
       try {
         const language = mapLanguageCode(i18n.language)
         const shopifyProduct = await getProduct(handle, language)
@@ -87,12 +90,16 @@ export function ProductPage() {
         } else if (placeholderProducts[handle]) {
           setProduct(placeholderProducts[handle])
           setSelectedVariant(placeholderProducts[handle].variants[0]?.id || null)
+        } else {
+          setProduct(null)
         }
       } catch (error) {
         console.log('Using placeholder product')
         if (handle && placeholderProducts[handle]) {
           setProduct(placeholderProducts[handle])
           setSelectedVariant(placeholderProducts[handle].variants[0]?.id || null)
+        } else {
+          setProduct(null)
         }
       } finally {
         setIsLoading(false)
@@ -128,6 +135,7 @@ export function ProductPage() {
     ? parseFloat(currentVariant.price.amount)
     : parseFloat(product.priceRange.minVariantPrice.amount)
   const isDiscoverySet = product.handle === 'discovery-set'
+  const isComingSoon = isDiscoverySet && !FEATURES.DISCOVERY_SET_ENABLED
 
   return (
     <div className="py-12">
@@ -155,15 +163,37 @@ export function ProductPage() {
 
           {/* Product Info */}
           <div>
+            {/* Coming Soon Banner */}
+            {isComingSoon && (
+              <div className="mb-6 bg-kas-gold/20 border border-kas-gold rounded-xl p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-kas-gold/30 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-kas-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-serif text-lg text-kas-charcoal">Coming Soon</p>
+                    <p className="text-sm text-kas-slate">This product is not yet available for purchase.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Title & Subtitle */}
             <div className="mb-6">
               <h1 className="font-serif text-3xl md:text-4xl text-kas-charcoal">
                 {product.title}
-                {!isDiscoverySet && <span className="text-lg text-kas-slate ml-2">— Eau de Parfum</span>}
               </h1>
               {product.subtitle && (
                 <p className="mt-3 text-kas-slate font-light leading-relaxed">
                   {product.subtitle}
+                </p>
+              )}
+              {/* Long Description */}
+              {product.description && product.description !== product.subtitle && (
+                <p className="mt-4 text-kas-slate leading-relaxed">
+                  {product.description}
                 </p>
               )}
             </div>
@@ -236,36 +266,6 @@ export function ProductPage() {
               </div>
             )}
 
-            {/* What You'll Discover */}
-            {isDiscoverySet && (
-              <div className="mb-6 bg-white rounded-xl p-6 border border-kas-sand">
-                <h3 className="font-serif text-lg text-kas-charcoal mb-4">{t('product.whatYoullDiscover')}</h3>
-                <div className="space-y-4">
-                  <div className="flex gap-3">
-                    <span className="text-kas-gold">●</span>
-                    <div>
-                      <p className="font-medium text-kas-charcoal">{t('product.fragrance1Name')}</p>
-                      <p className="text-sm text-kas-slate">{t('product.fragrance1Desc')}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <span className="text-kas-gold">●</span>
-                    <div>
-                      <p className="font-medium text-kas-charcoal">{t('product.fragrance2Name')}</p>
-                      <p className="text-sm text-kas-slate">{t('product.fragrance2Desc')}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <span className="text-kas-gold">●</span>
-                    <div>
-                      <p className="font-medium text-kas-charcoal">{t('product.fragrance3Name')}</p>
-                      <p className="text-sm text-kas-slate">{t('product.fragrance3Desc')}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
             {/* How to Test Your Samples */}
             {isDiscoverySet && (
               <div className="mb-6 bg-kas-sand/30 rounded-xl p-6">
@@ -320,10 +320,10 @@ export function ProductPage() {
 
               <button
                 onClick={handleAddToCart}
-                disabled={isAddingToCart || !product.availableForSale}
+                disabled={isAddingToCart || !product.availableForSale || isComingSoon}
                 className="btn-primary w-full disabled:opacity-50"
               >
-                {isAddingToCart ? 'Adding...' : product.availableForSale ? 'Add to Cart' : 'Sold Out'}
+                {isComingSoon ? 'Coming Soon' : isAddingToCart ? 'Adding...' : product.availableForSale ? 'Add to Cart' : 'Sold Out'}
               </button>
             </div>
 
@@ -336,7 +336,7 @@ export function ProductPage() {
             </div>
 
             {/* Product Details Accordion */}
-            {product.details && <ProductDetails details={product.details} />}
+            {product.details && <ProductDetails details={product.details} selectedVariantTitle={currentVariant?.title} />}
 
             {/* Trust Badges */}
             <div className="border-t border-kas-sand pt-6 mt-6">

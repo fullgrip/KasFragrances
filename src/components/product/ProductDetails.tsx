@@ -3,9 +3,10 @@ import type { ProductDetails as ProductDetailsType } from '../../types'
 
 interface ProductDetailsProps {
   details: ProductDetailsType
+  selectedVariantTitle?: string
 }
 
-export function ProductDetails({ details }: ProductDetailsProps) {
+export function ProductDetails({ details, selectedVariantTitle }: ProductDetailsProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -30,7 +31,7 @@ export function ProductDetails({ details }: ProductDetailsProps) {
           <dl className="space-y-3 text-sm">
             <div className="flex justify-between">
               <dt className="text-kas-slate">Size</dt>
-              <dd className="text-kas-charcoal">{details.size}</dd>
+              <dd className="text-kas-charcoal">{selectedVariantTitle || details.size}</dd>
             </div>
             <div className="flex justify-between">
               <dt className="text-kas-slate">Longevity</dt>
