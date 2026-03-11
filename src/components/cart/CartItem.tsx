@@ -2,6 +2,10 @@ import { Link } from 'react-router-dom'
 import { useCartStore } from '../../store/cart'
 import type { CartItem as CartItemType } from '../../types'
 
+// Format size strings: "50ml" -> "50 ml"
+const formatSize = (title: string) =>
+  title.replace(/(\d+)(ml)/gi, '$1 $2')
+
 interface CartItemProps {
   item: CartItemType
 }
@@ -47,9 +51,9 @@ export function CartItem({ item }: CartItemProps) {
           {item.product.title}
         </Link>
         {variant && (
-          <p className="text-xs text-kas-slate">{variant.title}</p>
+          <p className="text-xs text-kas-slate">{formatSize(variant.title)}</p>
         )}
-        <p className="text-sm text-kas-slate mt-0.5">€{price.toFixed(2)}</p>
+        <p className="text-base text-kas-charcoal mt-0.5">€{price.toFixed(2)}</p>
 
         {/* Quantity controls */}
         <div className="flex items-center gap-3 mt-2">
@@ -89,7 +93,7 @@ export function CartItem({ item }: CartItemProps) {
 
       {/* Line total */}
       <div className="text-right">
-        <span className="font-serif text-kas-charcoal">
+        <span className="font-serif text-xl font-medium text-kas-charcoal">
           €{(price * item.quantity).toFixed(2)}
         </span>
       </div>

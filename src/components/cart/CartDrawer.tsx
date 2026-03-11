@@ -94,15 +94,14 @@ export function CartDrawer() {
               {/* Subtotal */}
               <div className="flex items-center justify-between">
                 <span className="text-kas-slate">{t('cart.subtotal')}</span>
-                <span className="font-serif text-xl text-kas-charcoal">€{subtotal}</span>
+                <span className="font-serif text-2xl font-medium text-kas-charcoal">€{subtotal}</span>
               </div>
 
               {/* Free shipping progress */}
-              {parseFloat(cart.subtotal.amount) < 150 && (
+              {parseFloat(cart.subtotal.amount) < 150 ? (
                 <div className="text-sm text-kas-slate">
-                  <div className="flex justify-between mb-1">
-                    <span>{t('cart.freeShippingProgress')}</span>
-                    <span>€{(150 - parseFloat(cart.subtotal.amount)).toFixed(2)} {t('cart.away')}</span>
+                  <div className="mb-1">
+                    {t('cart.freeShippingMessage', { amount: (150 - parseFloat(cart.subtotal.amount)).toFixed(0) })}
                   </div>
                   <div className="h-1.5 bg-kas-sand rounded-full overflow-hidden">
                     <div
@@ -110,6 +109,10 @@ export function CartDrawer() {
                       style={{ width: `${Math.min(100, (parseFloat(cart.subtotal.amount) / 150) * 100)}%` }}
                     />
                   </div>
+                </div>
+              ) : (
+                <div className="text-sm text-kas-gold font-medium">
+                  {t('cart.freeShippingUnlocked')}
                 </div>
               )}
 

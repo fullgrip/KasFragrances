@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ProductCard } from '../components/product'
 import { Testimonials } from '../components/ui'
+import { SEO } from '../components/SEO'
 import type { Product } from '../types'
 import { getProducts, mapLanguageCode } from '../lib/shopify'
 import { FEATURES } from '../config/features'
@@ -122,6 +123,12 @@ export function HomePage() {
 
   return (
     <div>
+      <SEO
+        title={t('seo.homeTitle', 'Small-Batch Artisan Perfumes Handcrafted in Portugal')}
+        description={t('footer.brandDescription')}
+        url="/"
+      />
+
       {/* Hero Section */}
       <section className="relative bg-kas-sand overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-24 lg:py-32">

@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ProductCard } from '../components/product'
 import { ProductGridSkeleton } from '../components/ui'
+import { SEO } from '../components/SEO'
 import type { Product } from '../types'
 import { getProducts, mapLanguageCode } from '../lib/shopify'
 import { FEATURES } from '../config/features'
@@ -229,6 +230,12 @@ export function CollectionPage() {
 
   return (
     <div>
+      <SEO
+        title={t('collection.title')}
+        description={t('collection.subtitle')}
+        url="/collection"
+      />
+
       {/* Header */}
       <section className="bg-kas-sand py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">

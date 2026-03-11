@@ -336,10 +336,9 @@ function transformProduct(shopifyProduct: any): Product {
     ingredients: metafields.ingredients,
   }
 
-  // Calculate value anchor
-  const price = parseFloat(shopifyProduct.priceRange.minVariantPrice.amount)
-  const pricePerWear = (price / 100).toFixed(2) // Assuming ~100 wears per 50ml
-  const valueAnchor = `Less than €${pricePerWear} per wear — a luxury that lasts.`
+  // Value anchor - emphasize luxury concentration instead of price-per-wear
+  const concentration = details.concentration
+  const valueAnchor = `Eau de Parfum — ${concentration} concentration`
 
   // Use clean description if we parsed structured data, otherwise use original
   const cleanDescription = parsed.cleanDescription || shopifyProduct.description

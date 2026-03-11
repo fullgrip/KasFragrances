@@ -87,7 +87,7 @@ const mockReviews: Record<string, Review[]> = {
   ],
 }
 
-export function Reviews({ productHandle, productTitle }: ReviewsProps) {
+export function Reviews({ productHandle, productTitle: _productTitle }: ReviewsProps) {
   const [showAll, setShowAll] = useState(false)
   const [helpfulClicks, setHelpfulClicks] = useState<Record<string, boolean>>({})
 

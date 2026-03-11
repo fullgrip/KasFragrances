@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { SEO } from '../components/SEO'
 import { getProduct, mapLanguageCode } from '../lib/shopify'
 import type { Product } from '../types'
 import { FEATURES } from '../config/features'
 
-const FEATURED_PRODUCT_HANDLE = 'rose-blossom-body-mist'
+const FEATURED_PRODUCT_HANDLE = 'citrus-marine-wood'
 
 export function AboutPage() {
   const { i18n } = useTranslation()
@@ -27,8 +28,17 @@ export function AboutPage() {
     fetchFeaturedProduct()
   }, [i18n.language])
 
+  const { t } = useTranslation()
+
   return (
     <div>
+      <SEO
+        title={t('seo.aboutTitle', "Kim's Story")}
+        description={t('seo.aboutDescription', 'Meet Kim, the artisan behind KAS Fragrances. Handcrafted perfumes made in Portugal with premium European ingredients.')}
+        url="/about"
+        image="/images/banners/about-kas.jpg"
+      />
+
       {/* The Artisan - Meet Kim */}
       <section className="pt-12 pb-24 bg-kas-sand/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -57,21 +67,14 @@ export function AboutPage() {
                   spray on her JOY perfume and any other fragrance I could get my hands on.
                 </p>
                 <p>
-                  In my 20s and 30s, once I started working, perfume shops and duty-free
-                  stores felt like heaven. I would try on as many perfumes as I could and
-                  spend nearly all my money on fragrances: Dune by Christian Dior,
-                  Boucheron, Dolce & Gabbana Light Blue, Chanel... the list goes on and on.
+                  In my twenties, perfume shops and duty-free stores became my heaven.
+                  I explored fragrances from houses like Dior, Chanel, and Boucheron —
+                  always searching for that perfect scent.
                 </p>
                 <p>
-                  Today, I am truly fortunate to live in beautiful Portugal, where I am
-                  able to pursue my passion for perfumery and create to my heart's content.
-                  I am transported into another world when I'm creating a perfume. To be
-                  enveloped by beautiful scents uplifts and inspires me.
-                </p>
-                <p>
-                  It brings me joy to share my creations with those who appreciate luxury,
-                  elegance, and peaceful moments. It is my wish that my creations bring
-                  you joy and make you feel special and beautiful, because you are.
+                  Today, I live in beautiful Portugal, where I create fragrances inspired
+                  by memories, places, and emotions. It brings me joy to share my creations
+                  with those who appreciate luxury, elegance, and peaceful moments.
                 </p>
               </div>
 
@@ -145,93 +148,95 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* Featured Fragrance */}
-      <section className="py-24 bg-kas-sand/30">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {isLoadingProduct ? (
-            // Loading skeleton
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center animate-pulse">
-              <div className="flex justify-center">
-                <div className="aspect-[3/4] w-72 md:w-80 lg:w-96 bg-kas-sand rounded-2xl" />
-              </div>
-              <div>
-                <div className="h-4 w-32 bg-kas-sand rounded mb-4" />
-                <div className="h-10 w-64 bg-kas-sand rounded mb-4" />
-                <div className="h-20 w-full max-w-md bg-kas-sand rounded mb-8" />
-                <div className="space-y-4 mb-8">
-                  <div className="h-6 w-48 bg-kas-sand rounded" />
-                  <div className="h-6 w-56 bg-kas-sand rounded" />
-                  <div className="h-6 w-52 bg-kas-sand rounded" />
+      {/* Featured Fragrance - only show if product exists */}
+      {(isLoadingProduct || featuredProduct) && (
+        <section className="py-24 bg-kas-sand/30">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            {isLoadingProduct ? (
+              // Loading skeleton
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center animate-pulse">
+                <div className="flex justify-center">
+                  <div className="aspect-[3/4] w-72 md:w-80 lg:w-96 bg-kas-sand rounded-2xl" />
                 </div>
-                <div className="h-12 w-48 bg-kas-sand rounded" />
-              </div>
-            </div>
-          ) : featuredProduct ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              {/* Bottle Image */}
-              <div className="flex justify-center">
-                <div className="relative">
-                  <div className="aspect-[3/4] w-72 md:w-80 lg:w-96 bg-white rounded-2xl shadow-xl overflow-hidden">
-                    {featuredProduct.images.length > 0 ? (
-                      <img
-                        src={featuredProduct.images[0].url}
-                        alt={featuredProduct.images[0].altText || featuredProduct.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-kas-sand flex items-center justify-center">
-                        <span className="text-kas-slate">No image</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Fragrance Info */}
-              <div>
-                <span className="text-kas-gold text-sm uppercase tracking-widest">Featured Fragrance</span>
-                <h2 className="font-serif text-3xl md:text-4xl text-kas-charcoal mt-4 mb-4">
-                  {featuredProduct.title}
-                </h2>
-                <p className="text-kas-slate font-light text-lg mb-8 max-w-md">
-                  {featuredProduct.subtitle || featuredProduct.description}
-                </p>
-
-                {/* Scent Notes */}
-                {featuredProduct.scentNotes && (
+                <div>
+                  <div className="h-4 w-32 bg-kas-sand rounded mb-4" />
+                  <div className="h-10 w-64 bg-kas-sand rounded mb-4" />
+                  <div className="h-20 w-full max-w-md bg-kas-sand rounded mb-8" />
                   <div className="space-y-4 mb-8">
-                    {featuredProduct.scentNotes.top.length > 0 && (
-                      <div className="flex items-start gap-4">
-                        <span className="text-xs uppercase tracking-wider text-kas-gold font-medium w-20">Top</span>
-                        <span className="text-kas-charcoal">{featuredProduct.scentNotes.top.join(' • ')}</span>
-                      </div>
-                    )}
-                    {featuredProduct.scentNotes.heart.length > 0 && (
-                      <div className="flex items-start gap-4">
-                        <span className="text-xs uppercase tracking-wider text-kas-gold font-medium w-20">Heart</span>
-                        <span className="text-kas-charcoal">{featuredProduct.scentNotes.heart.join(' • ')}</span>
-                      </div>
-                    )}
-                    {featuredProduct.scentNotes.base.length > 0 && (
-                      <div className="flex items-start gap-4">
-                        <span className="text-xs uppercase tracking-wider text-kas-gold font-medium w-20">Base</span>
-                        <span className="text-kas-charcoal">{featuredProduct.scentNotes.base.join(' • ')}</span>
-                      </div>
-                    )}
+                    <div className="h-6 w-48 bg-kas-sand rounded" />
+                    <div className="h-6 w-56 bg-kas-sand rounded" />
+                    <div className="h-6 w-52 bg-kas-sand rounded" />
                   </div>
-                )}
-
-                <Link
-                  to={`/products/${featuredProduct.handle}`}
-                  className="inline-block px-8 py-3 bg-kas-charcoal text-white font-medium rounded hover:bg-kas-charcoal/90 transition-colors"
-                >
-                  Shop This Fragrance
-                </Link>
+                  <div className="h-12 w-48 bg-kas-sand rounded" />
+                </div>
               </div>
-            </div>
-          ) : null}
-        </div>
-      </section>
+            ) : featuredProduct ? (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                {/* Bottle Image */}
+                <div className="flex justify-center">
+                  <div className="relative">
+                    <div className="aspect-[3/4] w-72 md:w-80 lg:w-96 bg-white rounded-2xl shadow-xl overflow-hidden">
+                      {featuredProduct.images.length > 0 ? (
+                        <img
+                          src={featuredProduct.images[0].url}
+                          alt={featuredProduct.images[0].altText || featuredProduct.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-kas-sand flex items-center justify-center">
+                          <span className="text-kas-slate">No image</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Fragrance Info */}
+                <div>
+                  <span className="text-kas-gold text-sm uppercase tracking-widest">Featured Fragrance</span>
+                  <h2 className="font-serif text-3xl md:text-4xl text-kas-charcoal mt-4 mb-4">
+                    {featuredProduct.title}
+                  </h2>
+                  <p className="text-kas-slate font-light text-lg mb-8 max-w-md">
+                    {featuredProduct.subtitle || featuredProduct.description}
+                  </p>
+
+                  {/* Scent Notes */}
+                  {featuredProduct.scentNotes && (
+                    <div className="space-y-4 mb-8">
+                      {featuredProduct.scentNotes.top.length > 0 && (
+                        <div className="flex items-start gap-4">
+                          <span className="text-xs uppercase tracking-wider text-kas-gold font-medium w-20">Top</span>
+                          <span className="text-kas-charcoal">{featuredProduct.scentNotes.top.join(' • ')}</span>
+                        </div>
+                      )}
+                      {featuredProduct.scentNotes.heart.length > 0 && (
+                        <div className="flex items-start gap-4">
+                          <span className="text-xs uppercase tracking-wider text-kas-gold font-medium w-20">Heart</span>
+                          <span className="text-kas-charcoal">{featuredProduct.scentNotes.heart.join(' • ')}</span>
+                        </div>
+                      )}
+                      {featuredProduct.scentNotes.base.length > 0 && (
+                        <div className="flex items-start gap-4">
+                          <span className="text-xs uppercase tracking-wider text-kas-gold font-medium w-20">Base</span>
+                          <span className="text-kas-charcoal">{featuredProduct.scentNotes.base.join(' • ')}</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  <Link
+                    to={`/products/${featuredProduct.handle}`}
+                    className="inline-block px-8 py-3 bg-kas-charcoal text-white font-medium rounded hover:bg-kas-charcoal/90 transition-colors"
+                  >
+                    Shop This Fragrance
+                  </Link>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </section>
+      )}
 
       {/* Values */}
       <section className="py-24 bg-kas-charcoal text-white">

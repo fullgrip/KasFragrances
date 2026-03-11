@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Layout } from './components/layout'
 import { ScrollToTop } from './components/ScrollToTop'
-import { HomePage, CollectionPage, ProductPage, AboutPage, SearchPage } from './pages'
+import { HomePage, CollectionPage, ProductPage, AboutPage, SearchPage, PrivacyPolicyPage, TermsAndConditionsPage } from './pages'
 import { useCartStore } from './store/cart'
 import { mapLanguageCode } from './lib/shopify'
 
@@ -29,6 +29,8 @@ function App() {
         {/* Placeholder routes - can be expanded later */}
         <Route path="/shipping" element={<ShippingPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms" element={<TermsAndConditionsPage />} />
         {/* 404 */}
         <Route path="*" element={<NotFoundPage />} />
         </Routes>

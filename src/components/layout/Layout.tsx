@@ -3,6 +3,7 @@ import { AnnouncementBar } from './AnnouncementBar'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { CartDrawer } from '../cart/CartDrawer'
+import { CookieBanner } from '../ui/CookieBanner'
 import { useCartStore } from '../../store/cart'
 
 interface LayoutProps {
@@ -25,6 +26,7 @@ export function Layout({ children }: LayoutProps) {
       </main>
       <Footer />
       <CartDrawer />
+      <CookieBanner />
     </div>
   )
 }

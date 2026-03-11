@@ -80,6 +80,40 @@ Please reply with any corrections or confirmations. Thanks!
 
 ---
 
+## About Page - "Kim's Story" Text Update
+
+Hi Kim! We made a small edit to your story on the About page to improve readability.
+
+### What changed
+
+We shortened the story from 4 paragraphs to 3, making it easier to scan on mobile devices and for quick readers. Your voice and story are preserved — we just tightened the flow.
+
+**Before (paragraph 2):**
+> In my 20s and 30s, once I started working, perfume shops and duty-free stores felt like heaven. I would try on as many perfumes as I could and spend nearly all my money on fragrances: Dune by Christian Dior, Boucheron, Dolce & Gabbana Light Blue, Chanel... the list goes on and on.
+
+**After (paragraph 2):**
+> In my twenties, perfume shops and duty-free stores became my heaven. I explored fragrances from houses like Dior, Chanel, and Boucheron — always searching for that perfect scent.
+
+**Before (paragraphs 3 & 4 were separate):**
+> Today, I am truly fortunate to live in beautiful Portugal, where I am able to pursue my passion for perfumery and create to my heart's content. I am transported into another world when I'm creating a perfume. To be enveloped by beautiful scents uplifts and inspires me.
+>
+> It brings me joy to share my creations with those who appreciate luxury, elegance, and peaceful moments.
+
+**After (combined into one):**
+> Today, I live in beautiful Portugal, where I create fragrances inspired by memories, places, and emotions. It brings me joy to share my creations with those who appreciate luxury, elegance, and peaceful moments.
+
+### Why we made this change
+
+- Luxury ecommerce readers tend to skim story pages
+- Shorter paragraphs improve mobile readability
+- The founder quote at the bottom still carries the emotional payoff
+
+### Please review
+
+If you'd prefer the original longer version, or want to adjust any wording, just let us know and we'll restore or edit it.
+
+---
+
 ## Tutorial: Adding Scent Tags to Products in Shopify
 
 We've added a new feature to show **short scent cues** on product cards (e.g., "Fresh · Marine · Woody"). This helps customers quickly understand each fragrance's character.

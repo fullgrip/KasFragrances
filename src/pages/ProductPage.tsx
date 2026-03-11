@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ScentNotes, ProductDetails, ImageGallery, Reviews } from '../components/product'
+import { ScentNotes, ProductDetails, ImageGallery, Reviews, RelatedProducts } from '../components/product'
 import { TrustBadges, ProductPageSkeleton } from '../components/ui'
+import { SEO } from '../components/SEO'
 import { useCartStore } from '../store/cart'
 import type { Product } from '../types'
 import { getProduct, mapLanguageCode } from '../lib/shopify'
 import { FEATURES } from '../config/features'
+
+// Format size strings: "50ml" -> "50 ml"
+const formatSize = (title: string) =>
+  title.replace(/(\d+)(ml)/gi, '$1 $2')
 
 // Placeholder products for development
 const placeholderProducts: Record<string, Product> = {
@@ -30,7 +35,7 @@ const placeholderProducts: Record<string, Product> = {
       isCrueltyFree: true,
       ingredients: 'Alcohol Denat., Parfum (Fragrance), Aqua (Water), Limonene, Linalool, Coumarin, Citral',
     },
-    valueAnchor: 'Less than €0.45 per wear — a luxury that lasts.',
+    valueAnchor: 'Eau de Parfum — 18% fragrance oil concentration',
     images: [],
     variants: [{ id: 'v1', title: '50ml', price: { amount: '45.00', currencyCode: 'EUR' }, availableForSale: true }],
     tags: ['unisex', 'fresh', 'marine'],
@@ -72,7 +77,7 @@ export function ProductPage() {
   const [product, setProduct] = useState<Product | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null)
-  const [quantity, setQuantity] = useState(1)
+  const quantity = 1 // Simplified UX: default to 1, quantity can be adjusted in cart
   const { addItem, isLoading: isAddingToCart } = useCartStore()
 
   useEffect(() => {
@@ -137,8 +142,27 @@ export function ProductPage() {
   const isDiscoverySet = product.handle === 'discovery-set'
   const isComingSoon = isDiscoverySet && !FEATURES.DISCOVERY_SET_ENABLED
 
+  // SEO: Get product image for social sharing
+  const productImage = product.images[0]?.url || '/images/og-default.jpg'
+  const productDescription = product.subtitle || product.description?.slice(0, 160) || ''
+
   return (
     <div className="py-12">
+      <SEO
+        title={product.title}
+        description={productDescription}
+        url={`/products/${product.handle}`}
+        type="product"
+        image={productImage}
+        product={{
+          name: product.title,
+          description: product.description || '',
+          image: productImage,
+          price: product.priceRange.minVariantPrice.amount,
+          currency: product.priceRange.minVariantPrice.currencyCode,
+          availability: product.availableForSale ? 'InStock' : 'OutOfStock',
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="mb-8">
@@ -155,9 +179,9 @@ export function ProductPage() {
           </ol>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Images */}
-          <div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:items-start">
+          {/* Images - sticky on desktop */}
+          <div className="lg:sticky lg:top-24">
             <ImageGallery images={product.images} productTitle={product.title} />
           </div>
 
@@ -182,7 +206,7 @@ export function ProductPage() {
 
             {/* Title & Subtitle */}
             <div className="mb-6">
-              <h1 className="font-serif text-3xl md:text-4xl text-kas-charcoal">
+              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-kas-charcoal leading-tight">
                 {product.title}
               </h1>
               {product.subtitle && (
@@ -190,20 +214,38 @@ export function ProductPage() {
                   {product.subtitle}
                 </p>
               )}
-              {/* Long Description */}
+              {/* Long Description - split into paragraphs for readability */}
               {product.description && product.description !== product.subtitle && (
-                <p className="mt-4 text-kas-slate leading-relaxed">
-                  {product.description}
-                </p>
+                <div className="mt-4 space-y-4">
+                  {(product.description.includes('\n\n')
+                    ? product.description.split('\n\n').filter((p: string) => p.trim())
+                    : (() => {
+                        const sentences = product.description.match(/[^.!?]+[.!?]+/g) || [product.description]
+                        if (sentences.length <= 3) return [product.description]
+                        const midpoint = Math.ceil(sentences.length / 2)
+                        return [
+                          sentences.slice(0, midpoint).join('').trim(),
+                          sentences.slice(midpoint).join('').trim()
+                        ].filter(p => p)
+                      })()
+                  ).map((paragraph: string, index: number) => (
+                    <p key={index} className="text-kas-slate leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               )}
             </div>
 
             {/* Price & Value Anchor */}
             <div className="mb-6">
-              <p className="font-serif text-2xl text-kas-charcoal">€{price.toFixed(2)}</p>
+              <p className="font-serif text-3xl text-kas-charcoal">€{price.toFixed(2)}</p>
               {product.valueAnchor && (
                 <p className="text-sm text-kas-gold mt-1">{product.valueAnchor}</p>
               )}
+              <p className="text-sm text-kas-slate mt-2 italic">
+                {t('product.craftsmanship')}
+              </p>
             </div>
 
             {/* Size Selector */}
@@ -222,7 +264,7 @@ export function ProductPage() {
                           : 'border-kas-sand hover:border-kas-charcoal'
                       } ${!variant.availableForSale ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
-                      {variant.title}
+                      {formatSize(variant.title)} — €{parseFloat(variant.price.amount).toFixed(0)}
                     </button>
                   ))}
                 </div>
@@ -291,33 +333,8 @@ export function ProductPage() {
               </div>
             )}
 
-            {/* Quantity & Add to Cart */}
-            <div className="space-y-4 mb-6">
-              <div className="flex items-center gap-4">
-                <label className="text-sm text-kas-slate">Quantity</label>
-                <div className="flex items-center border border-kas-sand rounded">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-10 h-10 flex items-center justify-center text-kas-slate hover:text-kas-charcoal transition-colors"
-                    aria-label="Decrease quantity"
-                  >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                    </svg>
-                  </button>
-                  <span className="w-12 text-center">{quantity}</span>
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="w-10 h-10 flex items-center justify-center text-kas-slate hover:text-kas-charcoal transition-colors"
-                    aria-label="Increase quantity"
-                  >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
+            {/* Add to Cart */}
+            <div className="mb-6">
               <button
                 onClick={handleAddToCart}
                 disabled={isAddingToCart || !product.availableForSale || isComingSoon}
@@ -327,12 +344,26 @@ export function ProductPage() {
               </button>
             </div>
 
-            {/* Samples reminder */}
-            <div className="bg-kas-gold/10 rounded-lg p-4 flex items-start gap-3 mb-6">
-              <span className="text-xl">🎁</span>
-              <p className="text-sm text-kas-charcoal">
-                Every order includes <strong>2 complimentary samples</strong> of your choice.
-              </p>
+            {/* Trust reassurance checklist */}
+            <div className="space-y-2 mb-6">
+              <div className="flex items-center gap-2 text-sm text-kas-charcoal">
+                <svg className="w-4 h-4 text-kas-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>{t('product.reassurance.samples')}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-kas-charcoal">
+                <svg className="w-4 h-4 text-kas-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>{t('product.reassurance.shipping')}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-kas-charcoal">
+                <svg className="w-4 h-4 text-kas-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span>{t('product.reassurance.returns')}</span>
+              </div>
             </div>
 
             {/* Product Details Accordion */}
@@ -345,8 +376,13 @@ export function ProductPage() {
           </div>
         </div>
 
-        {/* Reviews Section */}
-        <Reviews productHandle={product.handle} productTitle={product.title} />
+        {/* Reviews Section - with increased spacing */}
+        <div className="mt-20">
+          <Reviews productHandle={product.handle} productTitle={product.title} />
+        </div>
+
+        {/* Related Products */}
+        <RelatedProducts currentProductHandle={product.handle} />
       </div>
     </div>
   )
