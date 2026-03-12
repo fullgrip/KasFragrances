@@ -1,10 +1,33 @@
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useCartStore } from '../../store/cart'
 import { CartItem } from './CartItem'
 
 export function CartDrawer() {
-  const { cart, isOpen, closeCart, isLoading, checkout } = useCartStore()
+  const { cart, isOpen, closeCart, isLoading, checkout, justAdded, clearJustAdded } = useCartStore()
   const { t } = useTranslation()
+
+  // Lock body scroll when cart is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
+  // Auto-dismiss success banner after 3 seconds
+  useEffect(() => {
+    if (justAdded) {
+      const timer = setTimeout(() => {
+        clearJustAdded()
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [justAdded, clearJustAdded])
 
   if (!isOpen) return null
 
@@ -37,6 +60,16 @@ export function CartDrawer() {
               </svg>
             </button>
           </div>
+
+          {/* Success Banner */}
+          {justAdded && (
+            <div className="bg-kas-gold/20 border-b border-kas-gold/30 px-6 py-3 flex items-center gap-2 animate-fade-in">
+              <svg className="w-5 h-5 text-kas-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              <span className="text-kas-charcoal font-medium">{t('cart.itemAdded')}</span>
+            </div>
+          )}
 
           {/* Cart Items */}
           <div className="flex-1 overflow-y-auto px-6 py-4">
@@ -116,14 +149,22 @@ export function CartDrawer() {
                 </div>
               )}
 
-              {/* Checkout button */}
-              <button
-                onClick={checkout}
-                disabled={isLoading}
-                className="btn-primary w-full disabled:opacity-50"
-              >
-                {isLoading ? t('cart.processing') : t('cart.checkout')}
-              </button>
+              {/* Action buttons */}
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={checkout}
+                  disabled={isLoading}
+                  className="btn-primary w-full disabled:opacity-50"
+                >
+                  {isLoading ? t('cart.processing') : t('cart.checkout')}
+                </button>
+                <button
+                  onClick={closeCart}
+                  className="w-full py-3 text-kas-charcoal font-medium border border-kas-sand rounded-md hover:bg-kas-sand/50 transition-colors"
+                >
+                  {t('cart.continueShoppingBtn')}
+                </button>
+              </div>
 
               <p className="text-xs text-center text-kas-slate">
                 {t('cart.shippingAtCheckout')}

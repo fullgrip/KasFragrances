@@ -30,12 +30,12 @@ const placeholderProducts: Record<string, Product> = {
     details: {
       size: '50ml Eau de Parfum',
       longevity: '6-8 hours on skin',
-      concentration: '18% fragrance oil',
+      concentration: '15% fragrance oil',
       isVegan: false,
       isCrueltyFree: true,
       ingredients: 'Alcohol Denat., Parfum (Fragrance), Aqua (Water), Limonene, Linalool, Coumarin, Citral',
     },
-    valueAnchor: 'Eau de Parfum — 18% fragrance oil concentration',
+    valueAnchor: 'Eau de Parfum — 15% fragrance oil concentration',
     images: [],
     variants: [{ id: 'v1', title: '50ml', price: { amount: '45.00', currencyCode: 'EUR' }, availableForSale: true }],
     tags: ['unisex', 'fresh', 'marine'],
@@ -356,18 +356,12 @@ export function ProductPage() {
                 <svg className="w-4 h-4 text-kas-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span>{t('product.reassurance.shipping')}</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-kas-charcoal">
-                <svg className="w-4 h-4 text-kas-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
                 <span>{t('product.reassurance.returns')}</span>
               </div>
             </div>
 
             {/* Product Details Accordion */}
-            {product.details && <ProductDetails details={product.details} selectedVariantTitle={currentVariant?.title} />}
+            {product.details && <ProductDetails details={product.details} selectedVariantTitle={currentVariant?.title} isBodyCare={product.tags.map(t => t.toLowerCase()).includes('bodycare')} />}
 
             {/* Trust Badges */}
             <div className="border-t border-kas-sand pt-6 mt-6">

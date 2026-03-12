@@ -326,19 +326,26 @@ function transformProduct(shopifyProduct: any): Product {
   const scentProfile = parsed.scentProfile
   const hasScentProfile = scentProfile.fragranceFamily || scentProfile.mood || scentProfile.bestWorn
 
+  // Check if body care or diffuser product (by tags or productType)
+  const productTypeLower = shopifyProduct.productType?.toLowerCase() || ''
+  const isBodyCare = shopifyProduct.tags?.some((tag: string) => tag.toLowerCase() === 'bodycare') ||
+    ['body lotion', 'body cream', 'body care'].includes(productTypeLower)
+  const isDiffuser = productTypeLower.includes('diffuser') ||
+    shopifyProduct.tags?.some((tag: string) => tag.toLowerCase() === 'diffuser')
+  const skipFragranceDetails = isBodyCare || isDiffuser
+
   // Parse product details
   const details = {
-    size: '50ml Eau de Parfum',
-    longevity: metafields.longevity || '6-8 hours',
-    concentration: metafields.concentration || '18% fragrance oil',
+    size: isBodyCare ? '200ml' : '50ml Eau de Parfum',
+    longevity: metafields.longevity || (isBodyCare ? '4-6 hours' : '6-8 hours'),
+    concentration: skipFragranceDetails ? undefined : '15% fragrance oil',
     isVegan: metafields.is_vegan === 'true',
     isCrueltyFree: metafields.is_cruelty_free === 'true',
     ingredients: metafields.ingredients,
   }
 
-  // Value anchor - emphasize luxury concentration instead of price-per-wear
-  const concentration = details.concentration
-  const valueAnchor = `Eau de Parfum — ${concentration} concentration`
+  // Value anchor - only for fragrances, not body care or diffusers
+  const valueAnchor = skipFragranceDetails ? undefined : 'Eau de Parfum — 15% fragrance oil concentration'
 
   // Use clean description if we parsed structured data, otherwise use original
   const cleanDescription = parsed.cleanDescription || shopifyProduct.description

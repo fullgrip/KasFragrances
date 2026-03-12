@@ -49,17 +49,16 @@ function ShippingPage() {
           <div>
             <h2 className="font-serif text-2xl text-kas-charcoal mb-4">Shipping</h2>
             <div className="space-y-4 text-kas-slate font-light">
-              <p><strong className="text-kas-charcoal">Portugal:</strong> Free shipping on orders over €150. Flat rate €4.90 for orders under €150. Delivery in 2-4 business days.</p>
-              <p><strong className="text-kas-charcoal">EU Countries:</strong> Flat rate €9.90. Delivery in 5-10 business days.</p>
-              <p><strong className="text-kas-charcoal">Rest of World:</strong> Calculated at checkout. Delivery in 10-15 business days.</p>
+              <p><strong className="text-kas-charcoal">Portugal:</strong> Free shipping on orders over €150. Shipping calculated at checkout based on weight for orders under €150. Delivery in 3-7 business days.</p>
+              <p><strong className="text-kas-charcoal">EU Countries:</strong> Shipping calculated at checkout based on weight. Delivery in 7-10 business days.</p>
             </div>
           </div>
           <div>
             <h2 className="font-serif text-2xl text-kas-charcoal mb-4">Returns</h2>
             <p className="text-kas-slate font-light">
               We want you to love your KAS fragrance. If for any reason you're not completely satisfied,
-              you may return unopened products within 14 days for a full refund. Please contact us at
-              fragrancesbykas@gmail.com to initiate a return.
+              you may return unopened products within 14 days for a full refund. Please contact us at{' '}
+              <a href="mailto:fragrancesbykas@gmail.com" className="text-kas-gold hover:text-kas-copper transition-colors">fragrancesbykas@gmail.com</a> to initiate a return.
             </p>
           </div>
         </div>

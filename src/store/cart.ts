@@ -11,12 +11,14 @@ interface CartState {
   isLoading: boolean
   error: string | null
   language: ShopifyLanguage
+  justAdded: boolean
 
   // Actions
   openCart: () => void
   closeCart: () => void
   toggleCart: () => void
   setLanguage: (language: ShopifyLanguage) => void
+  clearJustAdded: () => void
 
   initCart: () => Promise<void>
   addItem: (product: Product, variantId: string, quantity?: number) => Promise<void>
@@ -34,11 +36,13 @@ export const useCartStore = create<CartState>()(
       isLoading: false,
       error: null,
       language: 'EN',
+      justAdded: false,
 
       openCart: () => set({ isOpen: true }),
-      closeCart: () => set({ isOpen: false }),
+      closeCart: () => set({ isOpen: false, justAdded: false }),
       toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
       setLanguage: (language) => set({ language }),
+      clearJustAdded: () => set({ justAdded: false }),
 
       initCart: async () => {
         const { cart, language } = get()
@@ -80,7 +84,7 @@ export const useCartStore = create<CartState>()(
           }
 
           const updatedCart = await shopify.addToCart(cartId, variantId, quantity)
-          set({ cart: updatedCart, isLoading: false, isOpen: true })
+          set({ cart: updatedCart, isLoading: false, isOpen: true, justAdded: true })
         } catch (error) {
           set({ error: 'Failed to add item to cart', isLoading: false })
           console.error('Add to cart error:', error)

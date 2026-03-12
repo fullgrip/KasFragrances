@@ -23,7 +23,7 @@ export function TermsAndConditionsPage() {
             <ul className="mt-4 space-y-2">
               <li><strong className="text-kas-charcoal">{t('terms.name')}:</strong> Kim Steenkamp</li>
               <li><strong className="text-kas-charcoal">{t('terms.address')}:</strong> Oasis Parque, Rua Dos Medronheiros, 116, Portimão, Portugal 8500-286</li>
-              <li><strong className="text-kas-charcoal">{t('terms.email')}:</strong> fragrancesbykas@gmail.com</li>
+              <li><strong className="text-kas-charcoal">{t('terms.email')}:</strong> <a href="mailto:fragrancesbykas@gmail.com" className="text-kas-gold hover:text-kas-copper transition-colors">fragrancesbykas@gmail.com</a></li>
             </ul>
           </section>
 
@@ -47,7 +47,6 @@ export function TermsAndConditionsPage() {
               <li>{t('terms.shippingItem1')}</li>
               <li>{t('terms.shippingItem2')}</li>
               <li>{t('terms.shippingItem3')}</li>
-              <li>{t('terms.shippingItem4')}</li>
             </ul>
           </section>
 

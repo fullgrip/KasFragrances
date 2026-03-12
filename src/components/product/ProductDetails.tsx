@@ -4,9 +4,10 @@ import type { ProductDetails as ProductDetailsType } from '../../types'
 interface ProductDetailsProps {
   details: ProductDetailsType
   selectedVariantTitle?: string
+  isBodyCare?: boolean
 }
 
-export function ProductDetails({ details, selectedVariantTitle }: ProductDetailsProps) {
+export function ProductDetails({ details, selectedVariantTitle, isBodyCare = false }: ProductDetailsProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -37,10 +38,12 @@ export function ProductDetails({ details, selectedVariantTitle }: ProductDetails
               <dt className="text-kas-slate">Longevity</dt>
               <dd className="text-kas-charcoal">{details.longevity}</dd>
             </div>
-            <div className="flex justify-between">
-              <dt className="text-kas-slate">Concentration</dt>
-              <dd className="text-kas-charcoal">{details.concentration}</dd>
-            </div>
+{!isBodyCare && details.concentration && (
+              <div className="flex justify-between">
+                <dt className="text-kas-slate">Concentration</dt>
+                <dd className="text-kas-charcoal">{details.concentration}</dd>
+              </div>
+            )}
             <div className="flex justify-between">
               <dt className="text-kas-slate">Origin</dt>
               <dd className="text-kas-charcoal">Handcrafted in Portugal</dd>

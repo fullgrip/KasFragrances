@@ -26,7 +26,7 @@ const placeholderProducts: Product[] = [
     details: {
       size: '50ml Eau de Parfum',
       longevity: '6-8 hours',
-      concentration: '18% fragrance oil',
+      concentration: '15% fragrance oil',
       isVegan: true,
       isCrueltyFree: true,
     },
@@ -55,7 +55,7 @@ const placeholderProducts: Product[] = [
     details: {
       size: '50ml Eau de Parfum',
       longevity: '8-10 hours',
-      concentration: '20% fragrance oil',
+      concentration: '15% fragrance oil',
       isVegan: true,
       isCrueltyFree: true,
     },
@@ -84,7 +84,7 @@ const placeholderProducts: Product[] = [
     details: {
       size: '50ml Eau de Parfum',
       longevity: '10-12 hours',
-      concentration: '22% fragrance oil',
+      concentration: '15% fragrance oil',
       isVegan: true,
       isCrueltyFree: true,
     },
@@ -152,7 +152,7 @@ export function HomePage() {
                 </div>
                 <span className="text-sm text-kas-slate ml-1">{t('home.heroSocialProof')}</span>
               </div>
-              <div className="mt-6 flex flex-wrap gap-4 animate-fade-in-delay">
+              <div className="mt-6 flex flex-wrap gap-4 justify-center lg:justify-start animate-fade-in-delay">
                 {FEATURES.DISCOVERY_SET_ENABLED ? (
                   <Link to="/products/discovery-set" className="btn-primary">
                     {t('home.tryDiscoverySet')}

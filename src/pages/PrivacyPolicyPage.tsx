@@ -17,7 +17,7 @@ export function PrivacyPolicyPage() {
             <ul className="mt-4 space-y-2">
               <li><strong className="text-kas-charcoal">{t('privacy.name')}:</strong> Kim Steenkamp</li>
               <li><strong className="text-kas-charcoal">{t('privacy.address')}:</strong> Oasis Parque, Rua Dos Medronheiros, 116, Portimão, Portugal 8500-286</li>
-              <li><strong className="text-kas-charcoal">{t('privacy.email')}:</strong> fragrancesbykas@gmail.com</li>
+              <li><strong className="text-kas-charcoal">{t('privacy.email')}:</strong> <a href="mailto:fragrancesbykas@gmail.com" className="text-kas-gold hover:text-kas-copper transition-colors">fragrancesbykas@gmail.com</a></li>
             </ul>
           </section>
 

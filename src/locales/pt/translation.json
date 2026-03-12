@@ -24,8 +24,8 @@
     "privacyPolicy": "Política de Privacidade",
     "termsAndConditions": "Termos e Condições",
     "complaintsBook": "Livro de Reclamações",
-    "freeShipping": "Envio grátis acima de €150",
-    "freeSamples": "2 amostras de oferta em cada encomenda",
+    "freeShipping": "Envio grátis em Portugal acima de €150",
+    "freeSamples": "2 amostras grátis em encomendas acima de €150",
     "handcrafted": "Feito à mão em Portugal",
     "copyright": "© {{year}} KAS Fragrances. Todos os direitos reservados."
   },
@@ -39,9 +39,9 @@
     "artisanQuality": "Qualidade Artesanal",
     "artisanQualityDesc": "Feito à mão em pequenos lotes usando ingredientes europeus premium",
     "freeSamples": "2 Amostras Grátis",
-    "freeSamplesDesc": "Cada encomenda inclui 2 amostras à sua escolha",
+    "freeSamplesDesc": "Encomendas acima de €150 incluem 2 amostras à sua escolha",
     "freeShipping": "Envio Grátis",
-    "freeShippingDesc": "Envio gratuito em encomendas acima de €150",
+    "freeShippingDesc": "Em Portugal em encomendas acima de €150",
     "theCollection": "A Coleção",
     "collectionSubtitle": "Descubra fragrâncias únicas, cada uma uma expressão pessoal de arte e paixão",
     "viewAllFragrances": "Ver Todas as Fragrâncias",
@@ -78,7 +78,7 @@
     "noProducts": "Nenhum produto encontrado com os filtros atuais.",
     "clearFilters": "Limpar todos os filtros",
     "viewProducts": "Ver {{count}} Produtos",
-    "samplesReminder": "Cada encomenda inclui <strong>2 amostras</strong> à sua escolha"
+    "samplesReminder": "Encomendas acima de €150 incluem <strong>2 amostras</strong> à sua escolha"
   },
   "product": {
     "notFound": "Produto Não Encontrado",
@@ -91,7 +91,7 @@
     "addToCart": "Adicionar ao Carrinho",
     "adding": "A adicionar...",
     "soldOut": "Esgotado",
-    "samplesReminder": "Cada encomenda inclui <strong>2 amostras</strong> à sua escolha.",
+    "samplesReminder": "Encomendas acima de €150 incluem <strong>2 amostras</strong> à sua escolha.",
     "whatsIncluded": "O Que Está Incluído",
     "discoveryItem1": "5 × 2ml frascos spray de fragrâncias exclusivas",
     "discoveryItem2": "Crédito de €10 para a sua primeira garrafa (código: MYFIRSTKAS)",
@@ -106,8 +106,8 @@
     "youMayAlsoLike": "Também Pode Gostar",
     "craftsmanship": "Feito à mão em Portugal · Perfumaria artesanal em pequenos lotes",
     "reassurance": {
-      "samples": "2 amostras grátis em cada encomenda",
-      "shipping": "Envio grátis acima de €150",
+      "samples": "Envio grátis em Portugal + 2 amostras em encomendas acima de €150",
+      "shipping": "",
       "returns": "Devoluções sem complicações em 14 dias"
     }
   },
@@ -127,13 +127,15 @@
     "empty": "O seu carrinho está vazio",
     "continueShopping": "Continuar a comprar",
     "subtotal": "Total Estimado",
-    "freeShippingMessage": "Faltam €{{amount}} para envio grátis!",
-    "freeShippingUnlocked": "Desbloqueou o envio grátis!",
+    "freeShippingMessage": "Faltam €{{amount}} para envio grátis em Portugal!",
+    "freeShippingUnlocked": "Desbloqueou o envio grátis em Portugal!",
     "checkout": "Finalizar Compra",
     "processing": "A processar...",
     "shippingAtCheckout": "Envio calculado no checkout",
-    "samplesIncluded": "2 amostras serão incluídas na sua encomenda",
-    "remove": "Remover"
+    "samplesIncluded": "2 amostras incluídas em encomendas acima de €150",
+    "remove": "Remover",
+    "itemAdded": "Produto adicionado ao carrinho!",
+    "continueShoppingBtn": "Continuar a Comprar"
   },
   "trust": {
     "secureCheckout": "Checkout Seguro",
@@ -143,7 +145,7 @@
     "authentic": "100% Autêntico",
     "authenticDesc": "Feito à mão em Portugal",
     "freeShipping": "Envio Grátis",
-    "freeShippingDesc": "Em encomendas acima de €150"
+    "freeShippingDesc": "Em Portugal em encomendas acima de €150"
   },
   "details": {
     "title": "Detalhes do Produto",
@@ -224,11 +226,10 @@
     "ordersItem3": "As encomendas são confirmadas por email após o pagamento bem-sucedido",
     "ordersItem4": "Reservamo-nos o direito de recusar ou cancelar encomendas a nosso critério",
     "shippingTitle": "Envios e Entregas",
-    "shippingText": "Enviamos de Portugal para destinos em todo o mundo:",
-    "shippingItem1": "Portugal: Envio grátis em encomendas acima de €150, caso contrário €4,90 taxa fixa",
-    "shippingItem2": "Países da UE: €9,90 taxa fixa de envio",
-    "shippingItem3": "Resto do Mundo: Calculado no checkout",
-    "shippingItem4": "Os prazos de entrega variam conforme o destino (2-15 dias úteis)",
+    "shippingText": "Enviamos de Portugal para Portugal e países da UE:",
+    "shippingItem1": "Portugal: Envio grátis em encomendas acima de €150. Envio calculado no checkout com base no peso para encomendas abaixo de €150",
+    "shippingItem2": "Países da UE: Envio calculado no checkout com base no peso",
+    "shippingItem3": "Prazos de entrega: Portugal 3-7 dias úteis, UE 7-10 dias úteis",
     "returnsTitle": "Devoluções e Reembolsos",
     "returnsText": "Queremos que fique satisfeito com a sua compra:",
     "returnsItem1": "Produtos por abrir podem ser devolvidos no prazo de 14 dias após a entrega",

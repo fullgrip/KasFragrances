@@ -114,11 +114,17 @@ export function Testimonials() {
   const maxDesktopIndex = testimonials.length - 3
   const maxMobileIndex = testimonials.length - 1
 
-  // Prevent index overflow when resizing
+  // Prevent index overflow when resizing to desktop
   useEffect(() => {
-    if (currentIndex > maxDesktopIndex) {
-      setCurrentIndex(maxDesktopIndex)
+    const handleResize = () => {
+      const isDesktop = window.matchMedia('(min-width: 768px)').matches
+      if (isDesktop && currentIndex > maxDesktopIndex) {
+        setCurrentIndex(maxDesktopIndex)
+      }
     }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [currentIndex, maxDesktopIndex])
 
   const goToPrevious = (max: number) => {

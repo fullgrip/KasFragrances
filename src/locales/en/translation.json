@@ -24,8 +24,8 @@
     "privacyPolicy": "Privacy Policy",
     "termsAndConditions": "Terms & Conditions",
     "complaintsBook": "Complaints Book (Portugal)",
-    "freeShipping": "Free shipping over €150",
-    "freeSamples": "2 complimentary samples with every order",
+    "freeShipping": "Free shipping in Portugal over €150",
+    "freeSamples": "2 complimentary samples on orders over €150",
     "handcrafted": "Handcrafted in Portugal",
     "copyright": "© {{year}} KAS Fragrances. All rights reserved."
   },
@@ -39,9 +39,9 @@
     "artisanQuality": "Artisan Quality",
     "artisanQualityDesc": "Handcrafted in small batches using premium European ingredients",
     "freeSamples": "2 Free Samples",
-    "freeSamplesDesc": "Every order includes 2 complimentary samples of your choice",
+    "freeSamplesDesc": "Orders over €150 include 2 complimentary samples of your choice",
     "freeShipping": "Free Shipping",
-    "freeShippingDesc": "Complimentary shipping on orders over €150",
+    "freeShippingDesc": "In Portugal on orders over €150",
     "theCollection": "The Collection",
     "collectionSubtitle": "Discover unique scents, each one a personal expression of artistry and passion",
     "viewAllFragrances": "View All Fragrances",
@@ -78,7 +78,7 @@
     "noProducts": "No products found with the current filters.",
     "clearFilters": "Clear all filters",
     "viewProducts": "View {{count}} Products",
-    "samplesReminder": "Every order includes <strong>2 complimentary samples</strong> of your choice"
+    "samplesReminder": "Orders over €150 include <strong>2 complimentary samples</strong> of your choice"
   },
   "product": {
     "notFound": "Product Not Found",
@@ -91,7 +91,7 @@
     "addToCart": "Add to Cart",
     "adding": "Adding...",
     "soldOut": "Sold Out",
-    "samplesReminder": "Every order includes <strong>2 complimentary samples</strong> of your choice.",
+    "samplesReminder": "Orders over €150 include <strong>2 complimentary samples</strong> of your choice.",
     "whatsIncluded": "What's Included",
     "discoveryItem1": "5 × 2ml spray vials of signature scents",
     "discoveryItem2": "€10 credit toward your first full bottle (code: MYFIRSTKAS)",
@@ -106,8 +106,8 @@
     "youMayAlsoLike": "You May Also Like",
     "craftsmanship": "Handcrafted in Portugal · Small-batch artisan perfumery",
     "reassurance": {
-      "samples": "2 complimentary samples with every order",
-      "shipping": "Free shipping over €150",
+      "samples": "Free shipping in Portugal + 2 samples on orders over €150",
+      "shipping": "",
       "returns": "14-day hassle-free returns"
     }
   },
@@ -127,13 +127,15 @@
     "empty": "Your cart is empty",
     "continueShopping": "Continue shopping",
     "subtotal": "Estimated Total",
-    "freeShippingMessage": "You're €{{amount}} away from free shipping!",
-    "freeShippingUnlocked": "You've unlocked free shipping!",
+    "freeShippingMessage": "You're €{{amount}} away from free shipping in Portugal!",
+    "freeShippingUnlocked": "You've unlocked free shipping in Portugal!",
     "checkout": "Checkout",
     "processing": "Processing...",
     "shippingAtCheckout": "Shipping calculated at checkout",
-    "samplesIncluded": "2 complimentary samples will be included with your order",
-    "remove": "Remove"
+    "samplesIncluded": "2 complimentary samples included on orders over €150",
+    "remove": "Remove",
+    "itemAdded": "Item added to your cart!",
+    "continueShoppingBtn": "Continue Shopping"
   },
   "trust": {
     "secureCheckout": "Secure Checkout",
@@ -143,7 +145,7 @@
     "authentic": "100% Authentic",
     "authenticDesc": "Handcrafted in Portugal",
     "freeShipping": "Free Shipping",
-    "freeShippingDesc": "On orders over €150"
+    "freeShippingDesc": "In Portugal on orders over €150"
   },
   "details": {
     "title": "Product Details",
@@ -224,11 +226,10 @@
     "ordersItem3": "Orders are confirmed via email once payment is successful",
     "ordersItem4": "We reserve the right to refuse or cancel orders at our discretion",
     "shippingTitle": "Shipping & Delivery",
-    "shippingText": "We ship from Portugal to destinations worldwide:",
-    "shippingItem1": "Portugal: Free shipping on orders over €150, otherwise €4.90 flat rate",
-    "shippingItem2": "EU Countries: €9.90 flat rate shipping",
-    "shippingItem3": "Rest of World: Calculated at checkout",
-    "shippingItem4": "Delivery times vary by destination (2-15 business days)",
+    "shippingText": "We ship from Portugal to Portugal and EU countries:",
+    "shippingItem1": "Portugal: Free shipping on orders over €150. Shipping calculated at checkout based on weight for orders under €150",
+    "shippingItem2": "EU Countries: Shipping calculated at checkout based on weight",
+    "shippingItem3": "Delivery times: Portugal 3-7 business days, EU 7-10 business days",
     "returnsTitle": "Returns & Refunds",
     "returnsText": "We want you to be happy with your purchase:",
     "returnsItem1": "Unopened products may be returned within 14 days of delivery",
