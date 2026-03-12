@@ -37,7 +37,7 @@ export interface ScentProfile {
 export interface ProductDetails {
   size: string
   longevity: string
-  concentration: string
+  concentration?: string
   isVegan: boolean
   isCrueltyFree: boolean
   ingredients?: string
