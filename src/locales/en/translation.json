@@ -39,7 +39,7 @@
     "artisanQuality": "Artisan Quality",
     "artisanQualityDesc": "Handcrafted in small batches using premium European ingredients",
     "freeSamples": "2 Free Samples",
-    "freeSamplesDesc": "Orders over €150 include 2 complimentary samples of your choice",
+    "freeSamplesDesc": "Orders over €150 include 2 complimentary samples",
     "freeShipping": "Free Shipping",
     "freeShippingDesc": "In Portugal on orders over €150",
     "theCollection": "The Collection",
@@ -78,7 +78,7 @@
     "noProducts": "No products found with the current filters.",
     "clearFilters": "Clear all filters",
     "viewProducts": "View {{count}} Products",
-    "samplesReminder": "Orders over €150 include <strong>2 complimentary samples</strong> of your choice"
+    "samplesReminder": "Orders over €150 include <strong>2 complimentary samples</strong>"
   },
   "product": {
     "notFound": "Product Not Found",
@@ -91,7 +91,7 @@
     "addToCart": "Add to Cart",
     "adding": "Adding...",
     "soldOut": "Sold Out",
-    "samplesReminder": "Orders over €150 include <strong>2 complimentary samples</strong> of your choice.",
+    "samplesReminder": "Orders over €150 include <strong>2 complimentary samples</strong>.",
     "whatsIncluded": "What's Included",
     "discoveryItem1": "5 × 2ml spray vials of signature scents",
     "discoveryItem2": "€10 credit toward your first full bottle (code: MYFIRSTKAS)",
