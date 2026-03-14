@@ -98,8 +98,8 @@ export function ProductPage() {
         } else {
           setProduct(null)
         }
-      } catch (error) {
-        console.log('Using placeholder product')
+      } catch {
+        // Fallback to placeholder
         if (handle && placeholderProducts[handle]) {
           setProduct(placeholderProducts[handle])
           setSelectedVariant(placeholderProducts[handle].variants[0]?.id || null)

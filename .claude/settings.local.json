@@ -24,7 +24,8 @@
       "Bash(git push:*)",
       "Bash(where:*)",
       "Bash(ffmpeg:*)",
-      "Bash(ls -la \"c:\\\\Users\\\\aampg\\\\Documents\\\\Projectos Coding\\\\KasFragrances\\\\public\\\\images\"\" 2>/dev/null || dir \"c:UsersaampgDocumentsProjectos CodingKasFragrancespublicimages \")"
+      "Bash(ls -la \"c:\\\\Users\\\\aampg\\\\Documents\\\\Projectos Coding\\\\KasFragrances\\\\public\\\\images\"\" 2>/dev/null || dir \"c:UsersaampgDocumentsProjectos CodingKasFragrancespublicimages \")",
+      "Bash(npm audit:*)"
     ]
   }
 }

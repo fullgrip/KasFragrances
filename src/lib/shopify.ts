@@ -166,6 +166,16 @@ const CART_FRAGMENT = `
   ${PRODUCT_FRAGMENT}
 `
 
+// Safe JSON parse with fallback for malformed data
+function safeJsonParse<T>(jsonString: string | undefined, fallback: T): T {
+  if (!jsonString) return fallback
+  try {
+    return JSON.parse(jsonString)
+  } catch {
+    return fallback
+  }
+}
+
 // Parse Shopify rich text JSON to plain text
 function parseRichTextJson(jsonString: string): string {
   try {
@@ -292,9 +302,9 @@ function transformProduct(shopifyProduct: any): Product {
 
   // Parse scent notes from metafields (if available)
   const metafieldScentNotes = {
-    top: metafields.scent_notes_top ? JSON.parse(metafields.scent_notes_top) : [],
-    heart: metafields.scent_notes_heart ? JSON.parse(metafields.scent_notes_heart) : [],
-    base: metafields.scent_notes_base ? JSON.parse(metafields.scent_notes_base) : [],
+    top: safeJsonParse<string[]>(metafields.scent_notes_top, []),
+    heart: safeJsonParse<string[]>(metafields.scent_notes_heart, []),
+    base: safeJsonParse<string[]>(metafields.scent_notes_base, []),
   }
   const hasMetafieldScentNotes = metafieldScentNotes.top.length || metafieldScentNotes.heart.length || metafieldScentNotes.base.length
 
@@ -310,13 +320,6 @@ function transformProduct(shopifyProduct: any): Product {
     }
   }
 
-  // Debug logging
-  console.log('=== Product Parser Debug ===')
-  console.log('Handle:', shopifyProduct.handle)
-  console.log('Raw descriptionHtml:', shopifyProduct.descriptionHtml)
-  console.log('Has long_descriptions metafield:', !!metafields.long_descriptions)
-  console.log('Parsed scentNotes:', JSON.stringify(parsed.scentNotes, null, 2))
-  console.log('Parsed scentProfile:', JSON.stringify(parsed.scentProfile, null, 2))
 
   // Use metafield scent notes if available, otherwise use parsed from description
   const scentNotes = hasMetafieldScentNotes ? metafieldScentNotes : parsed.scentNotes
@@ -357,7 +360,7 @@ function transformProduct(shopifyProduct: any): Product {
     description: cleanDescription,
     descriptionHtml: shopifyProduct.descriptionHtml,
     subtitle: metafields.subtitle,
-    scentTags: metafields.scent_tags ? JSON.parse(metafields.scent_tags) : undefined,
+    scentTags: safeJsonParse<string[]>(metafields.scent_tags, []) || undefined,
     scentNotes: hasScentNotes ? scentNotes : undefined,
     scentProfile: hasScentProfile ? scentProfile : undefined,
     details,

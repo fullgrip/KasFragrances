@@ -167,15 +167,10 @@ export function CollectionPage() {
         const language = mapLanguageCode(i18n.language)
         const shopifyProducts = await getProducts(language)
         if (shopifyProducts.length > 0) {
-          // Debug: log productType values
-          console.log('=== Product Types from Shopify ===')
-          shopifyProducts.forEach(p => {
-            console.log(`${p.title}: productType="${p.productType}", tags=${JSON.stringify(p.tags)}`)
-          })
           setProducts(shopifyProducts)
         }
-      } catch (error) {
-        console.log('Using placeholder products')
+      } catch {
+        // Fallback handled silently
       } finally {
         setIsLoading(false)
       }
